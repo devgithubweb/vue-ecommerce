@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
-import AccountSign from '@/components/AccountSign'
+import SignIn from '@/components/SignIn'
 
 Vue.use(Router)
 
@@ -14,9 +14,9 @@ export default new Router({
       component: Hello
     },
     {
-      path: '/test',
-      name: 'AccountSign',
-      component: AccountSign
+      path: '/sign-in',
+      name: 'SignIn',
+      component: SignIn
     }
   ]
 })
