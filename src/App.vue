@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-
+    <ProductService></ProductService>
     <router-view>
     </router-view>
   </div>
 </template>
 
 <script>
-  import ProductService from './ProductService'
+  import ProductService from './services/ProductService'
 
   export default {
     name: 'app',
