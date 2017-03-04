@@ -3,7 +3,7 @@
     {{ msg }}
     <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
 
-    {{model}}
+
   </div>
 </template>
 
