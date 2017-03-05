@@ -1,18 +1,18 @@
 <template>
   <div>
-    <div  v-for="product in products">
-      {{product}}
+    <div v-for="product in products">
+      {{product.title}}
     </div>
   </div>
 </template>
 
 <script>
   import axios from 'axios'
+  import {mapGetters} from 'vuex'
 
   export default {
     data () {
       return {
-        token: null,
         products: [],
         addProducts: () => {
           let newJob = {
@@ -45,6 +45,9 @@
       this.$nextTick(() => {
         this.getProducts()
       })
-    }
+    },
+    computed: mapGetters({
+      token: 'tokenState'
+    })
   }
 </script>
