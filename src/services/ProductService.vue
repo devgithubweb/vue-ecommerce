@@ -1,7 +1,8 @@
 <template>
   <div>
     <div v-for="product in products">
-      {{product.title}}
+      Product Title: {{product.title}}<br>
+      Product Description: {{product.description}} <br><br>
     </div>
   </div>
 </template>
@@ -13,18 +14,23 @@
   export default {
     data () {
       return {
+        name: 'Products',
+        title: '',
+        description: '',
         products: [],
         addProducts: () => {
           let newJob = {
             title: this.title,
             description: this.description
           }
-          axios.post('http://127.0.0.1:8000/api/products/', newJob, {headers: {Authorization: this.token}})
-            .then(() => {
-              this.getJobs()
-            }).catch(error => {
-              console.log(error)
-            })
+          if (this.token) {
+            axios.post('http://127.0.0.1:8000/api/products/', newJob, {headers: {Authorization: this.token}})
+              .then(() => {
+                this.getJobs()
+              }).catch(error => {
+                console.log(error)
+              })
+          }
         },
         removeProducts: index => {
           axios.delete('http://127.0.0.1:8000/api/products/'.concat(this.jobs[index].id), {headers: {Authorization: this.token}}).catch(error => {

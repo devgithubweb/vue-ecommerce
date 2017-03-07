@@ -54,9 +54,10 @@
             username: this.model.usernameModel,
             password: this.model.passwordModel
           }
-          axios.post('http://127.0.0.1:8000/get_auth_token/', data).then(response => {
-            if (response['data']['token']) {
-              this.$store.dispatch('setToken', 'Token ' + response['data']['token'])
+          axios.post('http://127.0.0.1:8000/rest-auth/login/', data).then(response => {
+            console.log(response['data']['key'])
+            if (response['data']['key']) {
+              this.$store.dispatch('setToken', 'Token ' + response['data']['key'])
               this.$store.dispatch('setUsername', this.model.usernameModel)
               axios.create({
                 headers: {

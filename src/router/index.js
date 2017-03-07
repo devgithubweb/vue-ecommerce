@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Hello from '@/components/Hello'
 import SignIn from '@/components/SignIn'
 import AccountService from '@/services/AccountService'
+import ProductService from '@/services/ProductService'
 
 Vue.use(Router)
 
@@ -23,6 +24,11 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: AccountService
+    },
+    {
+      path: '/products',
+      name: 'Products',
+      component: ProductService
     }
   ]
 })
