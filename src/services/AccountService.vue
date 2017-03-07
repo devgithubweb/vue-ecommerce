@@ -29,6 +29,7 @@
           usernameModel: '',
           passwordModel: ''
         },
+        products: [],
         schema: {
           fields: [
             {
@@ -95,8 +96,7 @@
     },
     computed: {
       ...mapGetters({
-        token: 'tokenState',
-        username: 'usernameState'
+        token: 'tokenState'
       })
     }
   }

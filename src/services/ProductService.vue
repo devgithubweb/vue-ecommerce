@@ -52,8 +52,11 @@
         this.getProducts()
       })
     },
-    computed: mapGetters({
-      token: 'tokenState'
-    })
+    computed: {
+      ...mapGetters({
+        token: 'tokenState',
+        username: 'usernameState'
+      })
+    }
   }
 </script>
