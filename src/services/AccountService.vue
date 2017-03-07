@@ -96,7 +96,8 @@
     },
     computed: {
       ...mapGetters({
-        token: 'tokenState'
+        token: 'tokenState',
+        username: 'usernameState'
       })
     }
   }

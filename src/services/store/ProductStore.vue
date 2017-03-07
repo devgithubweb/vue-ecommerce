@@ -4,9 +4,9 @@
 
   Vue.use(Vuex)
 
-  export const productStore = new Vuex.Store({
+  export const producstore = new Vuex.Store({
     state: {
-      products: null
+//      products: null
 
     },
     mutations: {
