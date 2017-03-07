@@ -1,9 +1,10 @@
 <template>
   <div class="signin-div">
-    {{ msg }}
     <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
 
+    <button v-on:click="signup()">Sign up</button>
 
+    {{model}}
   </div>
 </template>
 
@@ -15,14 +16,15 @@
   Vue.use(VueFormGenerator)
 
   export default {
-    name: 'SignIn',
+    name: 'Signup',
     data () {
       return {
         msg: 'test',
         model: {
           username: '',
-          password: '',
-          emailAddress: ''
+          password1: '',
+          password2: '',
+          email: ''
         },
         schema: {
           fields: [
@@ -36,16 +38,25 @@
             {
               type: 'input',
               inputType: 'password',
-              model: 'password',
-              min: 12,
+              model: 'password1',
+              min: 6,
               required: true,
               hint: 'Minimum 12 characters',
               validator: VueFormGenerator.validators.string
             },
             {
               type: 'input',
+              inputType: 'password',
+              model: 'password2',
+              min: 6,
+              required: true,
+              hint: 'Must be the same password',
+              validator: VueFormGenerator.validators.string
+            },
+            {
+              type: 'input',
               label: 'Email Address',
-              model: 'emailAddress',
+              model: 'email',
               placeholder: 'example@email.com'
             }
           ]

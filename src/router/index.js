@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
-import SignIn from '@/components/SignIn'
+import Signup from '@/components/Signup'
 import AccountService from '@/services/AccountService'
 import ProductService from '@/services/ProductService'
 
@@ -16,9 +16,9 @@ export default new Router({
       component: Hello
     },
     {
-      path: '/sign-in',
-      name: 'SignIn',
-      component: SignIn
+      path: '/sign-up',
+      name: 'Signup',
+      component: Signup
     },
     {
       path: '/login',
