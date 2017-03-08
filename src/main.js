@@ -5,8 +5,7 @@ import App from './App'
 import router from './router'
 import ProductService from './services/ProductService'
 import AccountService from './services/AccountService'
-import {store} from './services/store/AccountStore'
-import {producstore} from './services/store/ProductStore'
+import {store} from './services/store/store'
 
 Vue.config.productionTip = false
 
@@ -14,7 +13,6 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   store,
-  producstore,
   router,
   template: '<App/>',
   components: {App, ProductService, AccountService}
