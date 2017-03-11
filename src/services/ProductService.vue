@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div v-if="products.length == 0">No products available, please come back at a later time.</div>
     <div v-for="product in products">
       Product Title: {{product.title}}<br>
       Product Description: {{product.description}} <br><br>

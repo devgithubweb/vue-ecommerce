@@ -7,8 +7,6 @@
     <button v-on:click="logout()">Logout</button>
 
     <button v-on:click="register()">Register</button>
-    <br>
-    {{token}} -- {{username}}
   </div>
 </template>
 

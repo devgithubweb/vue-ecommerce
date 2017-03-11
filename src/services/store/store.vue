@@ -9,7 +9,8 @@
       token: null,
       username: null,
       products: [],
-      basket: []
+      basket: [],
+      is_admin: false
     },
     mutations: {
       SET_TOKEN (state, newToken) {
@@ -30,6 +31,10 @@
 
       REMOVE_FROM_BASKET (state, product) {
         state.basket.pop(product)
+      },
+
+      SET_IS_ADMIN (state, bool) {
+        state.is_admin = bool
       }
     },
     getters: {
@@ -44,6 +49,9 @@
       },
       basketState (state) {
         return state.basket
+      },
+      isAdminState (state) {
+        return state.is_admin
       }
     },
     actions: {
@@ -65,6 +73,10 @@
 
       removeFromBasket ({commit}, product) {
         commit('REMOVE_FROM_BASKET', product)
+      },
+
+      setIsAdmin ({commit}, bool) {
+        commit('SET_IS_ADMIN', bool)
       }
     }
   })
