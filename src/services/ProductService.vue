@@ -18,8 +18,8 @@
               <md-card-expand>
               <md-card-actions>
                 <!--<md-button>£{{ product.price }}</md-button>-->
-                <md-button>Add to basket</md-button>
-                <md-button>Buy</md-button>
+                <md-button @click.native="addToBasket(product);$store.dispatch('addTotalPrice')">Add to basket</md-button>
+                <md-button>£{{product.price}}</md-button>
                 <span style="flex: 1"></span>
                 <md-button class="md-icon-button" md-expand-trigger>
                   <md-icon>keyboard_arrow_down</md-icon>
@@ -37,7 +37,6 @@
         </md-layout>
       </md-layout>
     </md-layout>
-
   </div>
 </template>
 
@@ -79,9 +78,17 @@
         getProducts: () => {
           axios.get('http://127.0.0.1:8000/api/products/').then(response => {
             this.products = response.data
+            for (let i = 0; i < this.products.length; i++) {
+              this.products[i]['count'] = 0
+            }
+
+            console.log(this.products)
           }).catch(error => {
             console.log(error)
           })
+        },
+        addToBasket: (product) => {
+          this.$store.dispatch('addToBasket', product)
         }
       }
     },
@@ -93,7 +100,8 @@
     computed: {
       ...mapGetters({
         token: 'tokenState',
-        username: 'usernameState'
+        username: 'usernameState',
+        basket: 'basketState'
       })
     }
   }

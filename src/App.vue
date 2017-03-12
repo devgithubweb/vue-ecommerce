@@ -13,7 +13,17 @@
       <h3 v-if="username">Hi, {{username}}</h3>
 
       <md-menu md-align-trigger style="flex: 2" md-direction="bottom left">
-        <md-button md-menu-trigger><md-icon>people</md-icon></md-button>
+        <md-button md-menu-trigger><md-icon>add_shopping_cart</md-icon></md-button>
+
+        <md-menu-content>
+          <md-menu-item disabled v-if="basket.length == 0">No item in cart</md-menu-item>
+          <md-menu-item disabled v-for="product in basket">{{product.title}} - £{{product.price}} x{{product.count}}</md-menu-item>
+          <md-menu-item disabled v-if="total != 0">Total: £{{total}} <md-button>Check Out</md-button></md-menu-item>
+        </md-menu-content>
+      </md-menu>
+
+      <md-menu md-align-trigger style="flex: 2" md-direction="bottom left">
+        <md-button md-menu-trigger><md-icon>account_box</md-icon></md-button>
 
         <md-menu-content>
           <AccountService class="no-border-form-generator"></AccountService>
@@ -49,7 +59,9 @@
       Signup
     },
     computed: mapGetters({
-      username: 'usernameState'
+      username: 'usernameState',
+      basket: 'basketState',
+      total: 'totalState'
     })
   }
 </script>
@@ -70,6 +82,6 @@
   }
 
   .md-menu-content {
-    width: 200px;
+    width: 250px;
   }
 </style>
