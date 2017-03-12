@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <md-toolbar>
+    <md-toolbar class="sticky-header">
       <md-button @click.native="$router.push('/products')" class=" md-dense">Products
       </md-button>
 
@@ -34,7 +34,7 @@
       </md-button>
 
     </md-toolbar>
-
+    <br><br><br><br>
     <router-view>
     </router-view>
   </div>
@@ -83,5 +83,11 @@
 
   .md-menu-content {
     width: 250px;
+  }
+
+  .sticky-header {
+    position:fixed;
+    width: 100%;
+    z-index: 9;
   }
 </style>

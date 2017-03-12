@@ -47,6 +47,7 @@
         for (let i = 0; i < state.basket.length; i++) {
           state.total += (state.basket[i]['price'] * state.basket[i]['count'])
         }
+        state.total = parseFloat(state.total).toFixed(2)
       },
 
       SET_IS_ADMIN (state, bool) {
