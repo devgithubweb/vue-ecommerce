@@ -1,12 +1,14 @@
 <template>
   <div>
 
-    <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
+    <div v-if="!username && !token">
+      <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
+      <md-button @click.native="login()">Login</md-button>
+    </div>
 
-    <button v-on:click="login()">Login</button>
-    <button v-on:click="logout()">Logout</button>
-
-    <button v-on:click="register()">Register</button>
+    <div v-if="username && token">
+      <md-button @click.native="logout()">Logout</md-button>
+    </div>
   </div>
 </template>
 

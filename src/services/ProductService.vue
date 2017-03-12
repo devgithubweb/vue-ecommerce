@@ -1,12 +1,42 @@
 <template>
   <div>
-    <div v-if="products.length == 0">No products available, please come back at a later time.</div>
-    <div v-for="product in products">
-      Product Title: {{product.title}}<br>
-      Product Description: {{product.description}} <br><br>
-    </div>
+    <md-layout md-align="left">
+      <md-layout md-flex-xsmall="50" md-flex-medium="25" md-flex="25" v-for="product in products" :key="product.id">
+        <md-card class="md-card-size">
+          <md-card-media>
+            <div v-for="img in product.image[0]">
+              <img v-bind:src="img" v-bind:alt="product.title">
+            </div>
+          </md-card-media>
+
+          <md-card-header>
+            <div class="md-title">{{product.title}}</div>
+            <div class="md-subhead"></div>
+          </md-card-header>
+
+          <md-card-actions>
+            <md-button>Add to basket</md-button>
+            <md-button>Buy now</md-button>
+          </md-card-actions>
+        </md-card>
+      </md-layout>
+    </md-layout>
   </div>
 </template>
+
+<style scoped>
+  .flex-test {
+    display: flex;
+  }
+
+  .flex-test md-card {
+    order: 1
+  }
+
+  .md-card-size {
+    width: 90%
+  }
+</style>
 
 <script>
   import axios from 'axios'
@@ -20,12 +50,12 @@
         description: '',
         products: [],
         addProducts: () => {
-          let newJob = {
+          let newProduct = {
             title: this.title,
             description: this.description
           }
           if (this.token) {
-            axios.post('http://127.0.0.1:8000/api/products/', newJob, {headers: {Authorization: this.token}})
+            axios.post('http://127.0.0.1:8000/api/products/', newProduct, {headers: {Authorization: this.token}})
               .then(() => {
                 this.getJobs()
               }).catch(error => {
@@ -34,10 +64,10 @@
           }
         },
         removeProducts: index => {
-          axios.delete('http://127.0.0.1:8000/api/products/'.concat(this.jobs[index].id), {headers: {Authorization: this.token}}).catch(error => {
+          axios.delete('http://127.0.0.1:8000/api/products/'.concat(this.products[index].id), {headers: {Authorization: this.token}}).catch(error => {
             console.log(error)
           })
-          this.jobs.splice(index, 1)
+          this.products.splice(index, 1)
         },
         getProducts: () => {
           axios.get('http://127.0.0.1:8000/api/products/').then(response => {
