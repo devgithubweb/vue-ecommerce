@@ -12,7 +12,8 @@
       basket: [],
       is_admin: false,
       signupModel: null,
-      total: 0
+      total: 0,
+      showRegister: false
     },
     mutations: {
       SET_TOKEN (state, newToken) {
@@ -56,6 +57,10 @@
 
       SET_SIGN_UP (state, obj) {
         state.signupModel = obj
+      },
+
+      SET_SHOW_REGISTER (state, bool) {
+        state.showRegister = bool
       }
     },
     getters: {
@@ -79,6 +84,9 @@
       },
       signUpState (state) {
         return state.signupModel
+      },
+      showRegisterState (state) {
+        return state.showRegister
       }
     },
     actions: {
@@ -112,6 +120,10 @@
 
       setSignUp ({commit}, obj) {
         commit('SET_SIGN_UP', obj)
+      },
+
+      setShowRegister ({commit}, bool) {
+        commit('SET_SHOW_REGISTER', bool)
       }
     }
   })

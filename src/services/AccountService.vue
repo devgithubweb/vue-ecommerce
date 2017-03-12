@@ -4,16 +4,15 @@
     <div v-if="!username && !token && !showRegister">
       <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
       <md-button @click.native="login(); showRegister=false">Login</md-button>
-      <md-button @click.native="showRegister=true">Sign Up</md-button>
+      <md-button @click.native="$store.dispatch('setShowRegister', true)">Sign Up</md-button>
     </div>
 
     <div v-if="username && token">
-      <md-button @click.native="logout(); showRegister=false">Logout</md-button>
+      <md-button @click.native="logout()">Logout</md-button>
     </div>
 
     <div v-if="showRegister">
       <Signup></Signup>
-      <md-button @click.native="showRegister=false">Cancel</md-button>
     </div>
 
   </div>
@@ -40,7 +39,6 @@
           usernameModel: '',
           passwordModel: ''
         },
-        showRegister: false,
         products: [],
         schema: {
           fields: [
@@ -93,7 +91,8 @@
     computed: {
       ...mapGetters({
         token: 'tokenState',
-        username: 'usernameState'
+        username: 'usernameState',
+        showRegister: 'showRegisterState'
       })
     }
   }

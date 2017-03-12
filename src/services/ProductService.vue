@@ -1,9 +1,9 @@
 <template>
   <div>
     <md-layout md-gutter md-align="center">
-      <md-layout md-flex="90">
+      <md-layout md-flex-medium="100" md-flex="90">
         <md-layout md-align="left">
-          <md-layout md-flex-xsmall="100" md-flex-medium="33" md-flex="25" v-for="product in products" :key="product.id">
+          <md-layout md-flex-xsmall="50" md-flex-medium="33" md-flex="25" v-for="product in products" :key="product.id" class="product-card">
             <md-card class="md-card-size">
               <md-card-media>
                 <div v-for="img in product.image[0]">
@@ -18,8 +18,8 @@
               <md-card-expand>
               <md-card-actions>
                 <!--<md-button>£{{ product.price }}</md-button>-->
-                <md-button @click.native="addToBasket(product);$store.dispatch('addTotalPrice')">Add to basket</md-button>
-                <md-button>£{{product.price}}</md-button>
+                <md-button @click.native="addToBasket(product);$store.dispatch('addTotalPrice')"><md-icon>add_shopping_cart</md-icon></md-button>
+                <p style="padding-left: 10px">£{{product.price}}</p>
                 <span style="flex: 1"></span>
                 <md-button class="md-icon-button" md-expand-trigger>
                   <md-icon>keyboard_arrow_down</md-icon>
@@ -41,7 +41,9 @@
 </template>
 
 <style scoped>
-
+ .product-card {
+   padding: 10px;
+ }
 </style>
 
 <script>

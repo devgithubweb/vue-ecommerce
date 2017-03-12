@@ -13,12 +13,15 @@
       <h3 v-if="username">Hi, {{username}}</h3>
 
       <md-menu md-align-trigger style="flex: 2" md-direction="bottom left">
-        <md-button md-menu-trigger><md-icon>add_shopping_cart</md-icon></md-button>
+        <md-button md-menu-trigger><md-icon>shopping_cart</md-icon></md-button>
 
         <md-menu-content>
           <md-menu-item disabled v-if="basket.length == 0">No item in cart</md-menu-item>
-          <md-menu-item disabled v-for="product in basket">{{product.title}} - £{{product.price}} x{{product.count}}</md-menu-item>
-          <md-menu-item disabled v-if="total != 0"><strong>Total: £{{total}} </strong></md-menu-item><md-button>Check Out</md-button>
+          <md-menu-item disabled v-for="product in basket" :key="product.id">
+            {{product.title}} - £{{product.price}} <div style="float: right">x{{product.count}}</div>
+            <md-icon>remove_shopping_cart</md-icon>
+          </md-menu-item>
+          <md-menu-item disabled v-if="total != 0"><strong>Total: £{{total}} </strong></md-menu-item><md-button v-if="total != 0">Check Out</md-button>
         </md-menu-content>
       </md-menu>
 

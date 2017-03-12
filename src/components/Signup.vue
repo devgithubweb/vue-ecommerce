@@ -2,7 +2,7 @@
   <div class="signup-div">
     <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
 
-    <md-button @click.native="register()">Register</md-button>
+    <md-button @click.native="register()">Register</md-button><md-button @click.native="$store.dispatch('setShowRegister', false)">Cancel</md-button>
 
   </div>
 </template>
