@@ -1,14 +1,21 @@
 <template>
   <div>
 
-    <div v-if="!username && !token">
+    <div v-if="!username && !token && !showRegister">
       <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
-      <md-button @click.native="login()">Login</md-button>
+      <md-button @click.native="login(); showRegister=false">Login</md-button>
+      <md-button @click.native="showRegister=true">Sign Up</md-button>
     </div>
 
     <div v-if="username && token">
-      <md-button @click.native="logout()">Logout</md-button>
+      <md-button @click.native="logout(); showRegister=false">Logout</md-button>
     </div>
+
+    <div v-if="showRegister">
+      <Signup></Signup>
+      <md-button @click.native="showRegister=false">Cancel</md-button>
+    </div>
+
   </div>
 </template>
 
@@ -16,12 +23,16 @@
   import VueFormGenerator from 'vue-form-generator'
   import 'vue-form-generator/dist/vfg-core.css'
   import Vue from 'vue'
+  import Signup from '../components/Signup'
   import {mapGetters} from 'vuex'
   import axios from 'axios'
 
   Vue.use(VueFormGenerator)
 
   export default {
+    components: {
+      Signup
+    },
     data () {
       return {
         name: 'Login',
@@ -29,6 +40,7 @@
           usernameModel: '',
           passwordModel: ''
         },
+        showRegister: false,
         products: [],
         schema: {
           fields: [
@@ -75,22 +87,6 @@
         logout: () => {
           this.$store.dispatch('setUsername', null)
           this.$store.dispatch('setToken', null)
-        },
-        register: () => {
-          let data = {
-            username: 'testuserfromapi2',
-            email: 'qwewqe@gmail.com',
-            password1: 'ibrahim123',
-            password2: 'ibrahim123'
-          }
-          axios.post('http://127.0.0.1:8000/rest-auth/registration/', data).then(response => {
-            console.log(response)
-            if (response['data']['key']) {
-              console.log(response['data']['key'])
-            }
-          }).catch(error => {
-            console.log(error)
-          })
         }
       }
     },

@@ -10,7 +10,8 @@
       username: null,
       products: [],
       basket: [],
-      is_admin: false
+      is_admin: false,
+      signupModel: null
     },
     mutations: {
       SET_TOKEN (state, newToken) {
@@ -35,6 +36,10 @@
 
       SET_IS_ADMIN (state, bool) {
         state.is_admin = bool
+      },
+
+      SET_SIGN_UP (state, obj) {
+        state.signupModel = obj
       }
     },
     getters: {
@@ -52,6 +57,9 @@
       },
       isAdminState (state) {
         return state.is_admin
+      },
+      signUpState (state) {
+        return state.signupModel
       }
     },
     actions: {
@@ -77,6 +85,10 @@
 
       setIsAdmin ({commit}, bool) {
         commit('SET_IS_ADMIN', bool)
+      },
+
+      setSignUp ({commit}, obj) {
+        commit('SET_SIGN_UP', obj)
       }
     }
   })

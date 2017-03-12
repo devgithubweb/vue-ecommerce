@@ -1,41 +1,48 @@
 <template>
   <div>
-    <md-layout md-align="left">
-      <md-layout md-flex-xsmall="50" md-flex-medium="25" md-flex="25" v-for="product in products" :key="product.id">
-        <md-card class="md-card-size">
-          <md-card-media>
-            <div v-for="img in product.image[0]">
-              <img v-bind:src="img" v-bind:alt="product.title">
-            </div>
-          </md-card-media>
+    <md-layout md-gutter md-align="center">
+      <md-layout md-flex="90">
+        <md-layout md-align="left">
+          <md-layout md-flex-xsmall="100" md-flex-medium="33" md-flex="25" v-for="product in products" :key="product.id">
+            <md-card class="md-card-size">
+              <md-card-media>
+                <div v-for="img in product.image[0]">
+                  <img v-bind:src="img" v-bind:alt="product.title">
+                </div>
+              </md-card-media>
 
-          <md-card-header>
-            <div class="md-title">{{product.title}}</div>
-            <div class="md-subhead"></div>
-          </md-card-header>
+              <md-card-header>
+                <div class="md-title">{{product.title}}</div>
+                <div class="md-subhead"></div>
+              </md-card-header>
+              <md-card-expand>
+              <md-card-actions>
+                <!--<md-button>£{{ product.price }}</md-button>-->
+                <md-button>Add to basket</md-button>
+                <md-button>Buy</md-button>
+                <span style="flex: 1"></span>
+                <md-button class="md-icon-button" md-expand-trigger>
+                  <md-icon>keyboard_arrow_down</md-icon>
+                </md-button>
+              </md-card-actions>
 
-          <md-card-actions>
-            <md-button>Add to basket</md-button>
-            <md-button>Buy now</md-button>
-          </md-card-actions>
-        </md-card>
+              <md-card-content>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed
+                accusantium quasi non, voluptas eius illo quas, saepe voluptate pariatur in deleniti minus sint.
+                Excepturi.
+              </md-card-content>
+              </md-card-expand>
+            </md-card>
+          </md-layout>
+        </md-layout>
       </md-layout>
     </md-layout>
+
   </div>
 </template>
 
 <style scoped>
-  .flex-test {
-    display: flex;
-  }
 
-  .flex-test md-card {
-    order: 1
-  }
-
-  .md-card-size {
-    width: 90%
-  }
 </style>
 
 <script>

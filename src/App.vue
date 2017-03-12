@@ -4,15 +4,15 @@
       <md-button @click.native="$router.push('/products')" class=" md-dense">Products
       </md-button>
 
-      <md-input-container md-inline style="flex: 1 1">
-        <label>Search</label>
-        <md-input></md-input>
-      </md-input-container>
+      <!--<md-input-container md-inline style="flex: 1 1">-->
+        <!--<label>Search</label>-->
+        <!--<md-input></md-input>-->
+      <!--</md-input-container>-->
 
-      <h1 class="md-title" style="flex: 1">Example Title</h1>
-      <h3 style="flex: 0.2" v-if="username">Hi, {{username}}</h3>
+      <h1 class="md-title" style="flex: 10">Example Title</h1>
+      <h3 v-if="username">Hi, {{username}}</h3>
 
-      <md-menu md-align-trigger style="flex: 0.5">
+      <md-menu md-align-trigger style="flex: 2" md-direction="bottom left">
         <md-button md-menu-trigger><md-icon>people</md-icon></md-button>
 
         <md-menu-content>
@@ -33,9 +33,11 @@
 <script>
   import ProductService from './services/ProductService'
   import AccountService from './services/AccountService'
+  import Signup from './components/Signup'
   import Vue from 'vue'
   import {mapGetters} from 'vuex'
   import VueMaterial from 'vue-material'
+  import 'es6-promise/auto'
 
   Vue.use(VueMaterial)
 
@@ -43,7 +45,8 @@
     name: 'app',
     components: {
       ProductService,
-      AccountService
+      AccountService,
+      Signup
     },
     computed: mapGetters({
       username: 'usernameState'
@@ -64,5 +67,9 @@
 
   .no-border-form-generator fieldset{
     border: none
+  }
+
+  .md-menu-content {
+    width: 200px;
   }
 </style>

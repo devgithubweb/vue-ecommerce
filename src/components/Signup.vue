@@ -1,10 +1,9 @@
 <template>
-  <div class="signin-div">
+  <div class="signup-div">
     <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
 
-    <button v-on:click="signup()">Sign up</button>
+    <md-button @click.native="register()">Register</md-button>
 
-    {{model}}
   </div>
 </template>
 
@@ -12,6 +11,7 @@
   import VueFormGenerator from 'vue-form-generator'
   import 'vue-form-generator/dist/vfg-core.css'
   import Vue from 'vue'
+  import axios from 'axios'
 
   Vue.use(VueFormGenerator)
 
@@ -64,6 +64,22 @@
         formOptions: {
           validateAfterLoad: true,
           validateAfterChanged: true
+        },
+        register: () => {
+          let data = {
+            username: this.model.username,
+            email: this.model.email,
+            password1: this.model.password1,
+            password2: this.model.password2
+          }
+          axios.post('http://127.0.0.1:8000/rest-auth/registration/', data).then(response => {
+            console.log(response)
+            if (response['data']['key']) {
+              console.log(response['data']['key'])
+            }
+          }).catch(error => {
+            console.log(error)
+          })
         }
       }
     }
