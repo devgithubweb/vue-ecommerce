@@ -18,7 +18,7 @@
         <md-menu-content>
           <md-menu-item disabled v-if="basket.length == 0">No item in cart</md-menu-item>
           <md-menu-item disabled v-for="product in basket">{{product.title}} - £{{product.price}} x{{product.count}}</md-menu-item>
-          <md-menu-item disabled v-if="total != 0">Total: £{{total}} <md-button>Check Out</md-button></md-menu-item>
+          <md-menu-item disabled v-if="total != 0"><strong>Total: £{{total}} </strong></md-menu-item><md-button>Check Out</md-button>
         </md-menu-content>
       </md-menu>
 
