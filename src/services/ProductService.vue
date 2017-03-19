@@ -83,8 +83,6 @@
             for (let i = 0; i < this.products.length; i++) {
               this.products[i]['count'] = 0
             }
-
-            console.log(this.products)
           }).catch(error => {
             console.log(error)
           })
