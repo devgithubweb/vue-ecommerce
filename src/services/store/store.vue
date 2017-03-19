@@ -90,6 +90,9 @@
       }
     },
     actions: {
+      /*
+      Account management setting token, username and admin
+       */
       setToken ({commit}, token) {
         commit('SET_TOKEN', token)
       },
@@ -98,10 +101,26 @@
         commit('SET_USERNAME', username)
       },
 
+      setIsAdmin ({commit}, bool) {
+        commit('SET_IS_ADMIN', bool)
+      },
+      /*
+      Product management, setting products
+       */
       setProducts ({commit}, products) {
         commit('SET_PRODUCTS', products)
       },
 
+      setSignUp ({commit}, obj) {
+        commit('SET_SIGN_UP', obj)
+      },
+
+      setShowRegister ({commit}, bool) {
+        commit('SET_SHOW_REGISTER', bool)
+      },
+      /*
+      Basket management for adding and removing product in basket
+       */
       addToBasket: ({commit}, product) => {
         commit('ADD_TO_BASKET', product)
       },
@@ -112,18 +131,6 @@
 
       addTotalPrice ({commit}) {
         commit('ADD_TOTAL_PRICE', commit)
-      },
-
-      setIsAdmin ({commit}, bool) {
-        commit('SET_IS_ADMIN', bool)
-      },
-
-      setSignUp ({commit}, obj) {
-        commit('SET_SIGN_UP', obj)
-      },
-
-      setShowRegister ({commit}, bool) {
-        commit('SET_SHOW_REGISTER', bool)
       }
     }
   })
