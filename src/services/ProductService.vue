@@ -88,7 +88,7 @@
         },
         /**
          * Gets all products and mutates to local variable
-         * @return {null} 
+         * @return {null}
          */
         getProducts: () => {
           axios.get('http://127.0.0.1:8000/api/products/').then(response => {
@@ -103,9 +103,9 @@
           })
         },
         /**
-         * Adds to basket using the store 
+         * Adds to basket using the store
          * @param  {Object} product Adds the product based on the users selection
-         * @return {null}         
+         * @return {null}
          */
         addToBasket: (product) => {
           this.$store.dispatch('addToBasket', product)

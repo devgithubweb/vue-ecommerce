@@ -65,7 +65,7 @@
         },
         /**
          * Based on the form values, logs in and sets the store for user information
-         * @return {null} 
+         * @return {null}
          */
         login: () => {
           let data = {
@@ -88,7 +88,7 @@
         },
         /**
          * Logs out and mutates stores of user info to be null
-         * @return {null} 
+         * @return {null}
          */
         logout: () => {
           this.$store.dispatch('setUsername', null)
