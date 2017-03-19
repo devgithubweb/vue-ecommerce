@@ -16,6 +16,9 @@
       showRegister: false
     },
     mutations: {
+      /*
+      Account management setting token, username and admin
+       */
       SET_TOKEN (state, newToken) {
         state.token = newToken
       },
@@ -35,11 +38,15 @@
       SET_SHOW_REGISTER (state, bool) {
         state.showRegister = bool
       },
-
+      /*
+      Product management, setting products
+       */
       SET_PRODUCTS (state, products) {
         state.products = products
       },
-
+      /*
+      Basket management for adding and removing product in basket
+       */
       ADD_TO_BASKET: (state, product) => {
         if (state.basket.indexOf(product) !== -1) {
           state.basket.splice(state.basket.indexOf(product), 1)
