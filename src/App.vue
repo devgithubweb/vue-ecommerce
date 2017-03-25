@@ -2,7 +2,7 @@
   <div id="app">
     <md-toolbar class="sticky-header">
       <md-button @click.native="$router.push('/products')" class=" md-dense">Products</md-button>
-      <md-button @click.native="$router.push('/admin/products')" class=" md-dense">Admin</md-button>
+      <md-button @click.native="$router.push('/admin/products')" class=" md-dense" v-if="isAdmin">Admin</md-button>
 
       <h1 class="md-title" style="flex: 10">Example Title</h1>
       <h3 v-if="username">Hi, {{username}}</h3>
@@ -59,7 +59,8 @@
     computed: mapGetters({
       username: 'usernameState',
       basket: 'basketState',
-      total: 'totalState'
+      total: 'totalState',
+      isAdmin: 'isAdminState'
     })
   }
 </script>
