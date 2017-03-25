@@ -17,7 +17,6 @@
               </md-card-header>
               <md-card-expand>
               <md-card-actions>
-                <!--<md-button>£{{ product.price }}</md-button>-->
                 <md-button @click.native="addToBasket(product);$store.dispatch('addTotalPrice')"><md-icon>add_shopping_cart</md-icon></md-button>
                 <p style="padding-left: 10px">£{{product.price}}</p>
                 <span style="flex: 1"></span>
