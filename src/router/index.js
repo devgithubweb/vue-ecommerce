@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import Signup from '@/components/Signup'
+import ProductAdmin from '@/components/Admin/ProductAdmin'
 import AccountService from '@/services/AccountService'
 import ProductService from '@/services/ProductService'
 
@@ -29,6 +30,11 @@ export default new Router({
       path: '/products',
       name: 'Products',
       component: ProductService
+    },
+    {
+      path: '/admin/products',
+      name: 'ProductAdmin',
+      component: ProductAdmin
     }
   ]
 })

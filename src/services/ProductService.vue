@@ -57,33 +57,12 @@
         title: '',
         description: '',
         products: [],
-        addProducts: () => {
-          let newProduct = {
-            title: this.title,
-            description: this.description
-          }
-          if (this.token) {
-            axios.post('http://127.0.0.1:8000/api/products/', newProduct, {headers: {Authorization: this.token}})
-              .then(() => {
-                this.getJobs()
-              }).catch(error => {
-                console.log(error)
-              })
-          }
-        },
-        removeProducts: index => {
-          axios.delete('http://127.0.0.1:8000/api/products/'.concat(this.products[index].id), {headers: {Authorization: this.token}}).catch(error => {
-            console.log(error)
-          })
-          this.products.splice(index, 1)
-        },
         getProducts: () => {
           axios.get('http://127.0.0.1:8000/api/products/').then(response => {
             this.products = response.data
             for (let i = 0; i < this.products.length; i++) {
               this.products[i]['count'] = 0
             }
-
             console.log(this.products)
           }).catch(error => {
             console.log(error)

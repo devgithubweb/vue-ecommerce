@@ -1,13 +1,8 @@
 <template>
   <div id="app">
     <md-toolbar class="sticky-header">
-      <md-button @click.native="$router.push('/products')" class=" md-dense">Products
-      </md-button>
-
-      <!--<md-input-container md-inline style="flex: 1 1">-->
-        <!--<label>Search</label>-->
-        <!--<md-input></md-input>-->
-      <!--</md-input-container>-->
+      <md-button @click.native="$router.push('/products')" class=" md-dense">Products</md-button>
+      <md-button @click.native="$router.push('/admin/products')" class=" md-dense">Admin</md-button>
 
       <h1 class="md-title" style="flex: 10">Example Title</h1>
       <h3 v-if="username">Hi, {{username}}</h3>
