@@ -63,6 +63,10 @@
           validateAfterLoad: true,
           validateAfterChanged: true
         },
+        /**
+         * Based on the form values, logs in and sets the store for user information
+         * @return {null}
+         */
         login: () => {
           let data = {
             username: this.model.usernameModel,
@@ -82,6 +86,10 @@
             console.log(error)
           })
         },
+        /**
+         * Logs out and mutates stores of user info to be null
+         * @return {null}
+         */
         logout: () => {
           this.$store.dispatch('setUsername', null)
           this.$store.dispatch('setToken', null)

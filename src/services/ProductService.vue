@@ -57,6 +57,39 @@
         title: '',
         description: '',
         products: [],
+        /**
+         * Adds product through authorization header and based on newProduct object
+         * @return {null}
+         */
+        addProducts: () => {
+          let newProduct = {
+            title: this.title,
+            description: this.description
+          }
+          if (this.token) {
+            axios.post('http://127.0.0.1:8000/api/products/', newProduct, {headers: {Authorization: this.token}})
+              .then(() => {
+                this.getJobs()
+              }).catch(error => {
+                console.log(error)
+              })
+          }
+        },
+        /**
+         * Removes product based on user actions
+         * @param  {number} index The index of the product is deleted
+         * @return {null}       Mutates models separately
+         */
+        removeProducts: index => {
+          axios.delete('http://127.0.0.1:8000/api/products/'.concat(this.products[index].id), {headers: {Authorization: this.token}}).catch(error => {
+            console.log(error)
+          })
+          this.products.splice(index, 1)
+        },
+        /**
+         * Gets all products and mutates to local variable
+         * @return {null}
+         */
         getProducts: () => {
           axios.get('http://127.0.0.1:8000/api/products/').then(response => {
             this.products = response.data
@@ -68,6 +101,11 @@
             console.log(error)
           })
         },
+        /**
+         * Adds to basket using the store
+         * @param  {Object} product Adds the product based on the users selection
+         * @return {null}
+         */
         addToBasket: (product) => {
           this.$store.dispatch('addToBasket', product)
         }
