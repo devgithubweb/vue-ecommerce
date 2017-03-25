@@ -84,6 +84,8 @@
             }
           }).catch(error => {
             console.log(error)
+          }).then(response => {
+            this.validateUser()
           })
         },
         /**
@@ -93,6 +95,20 @@
         logout: () => {
           this.$store.dispatch('setUsername', null)
           this.$store.dispatch('setToken', null)
+        },
+        validateUser: () => {
+          // let data = {
+          //   username: this.model.usernameModel,
+          //   password: this.model.passwordModel
+          // }
+          axios.get('http://127.0.0.1:8000/api/admin-user/' + this.model.usernameModel + '/', {headers: {Authorization: this.token}}).then(response => {
+            if (response.data[0]['is_staff']) {
+              console.log('true is staff')
+              this.$store.dispatch('setIsAdmin', true)
+            }
+          }).catch(error => {
+            console.log(error)
+          })
         }
       }
     },
