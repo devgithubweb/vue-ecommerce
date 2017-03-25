@@ -22,7 +22,6 @@
         <md-table-header>
           <md-table-row>
             <md-table-head>Name</md-table-head>
-            <md-table-head>ID</md-table-head>
             <md-table-head>Title</md-table-head>
             <md-table-head>Content</md-table-head>
 
@@ -46,9 +45,10 @@
         <md-table-body>
           <md-table-row v-for="(product, indexNo) in filterByName" :key="product.id" class="md-table-cell-align">
             <md-table-cell>{{product.title}}</md-table-cell>
-            <md-table-cell v-for="(prop, propIndex) in product" :key="index" class="md-table-cell-align" v-if="index !== 'image'" @click.native="changeClicked()">
+            <md-table-cell v-for="(prop, propIndex) in product" :key="index" class="md-table-cell-align" v-if="propIndex !== 'image' && propIndex !== 'id'" @click.native="changeClicked()">
               <template v-else v-if="!clicked">{{prop}}</template>
               <template v-if="clicked">
+
                 <md-input-container md-inline><md-input v-model="products[indexNo][propIndex]"></md-input></md-input-container>
               </template>
             </md-table-cell>
