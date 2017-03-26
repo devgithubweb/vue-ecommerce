@@ -91,8 +91,8 @@
          */
         getProducts: () => {
           axios.get('http://127.0.0.1:8000/api/products/').then(response => {
-            this.products = response.data
-            this.$store.dispatch('setProducts', response.data)
+            this.products = response.data.results
+            this.$store.dispatch('setProducts', response.data.results)
             for (let i = 0; i < this.products.length; i++) {
               this.products[i]['count'] = 0
             }

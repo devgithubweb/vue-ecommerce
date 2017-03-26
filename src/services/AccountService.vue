@@ -102,7 +102,8 @@
           //   password: this.model.passwordModel
           // }
           axios.get('http://127.0.0.1:8000/api/admin-user/' + this.model.usernameModel + '/', {headers: {Authorization: this.token}}).then(response => {
-            if (response.data[0]['is_staff']) {
+            console.log(response)
+            if (response.data['results'][0]['is_staff']) {
               console.log('true is staff')
               this.$store.dispatch('setIsAdmin', true)
             }

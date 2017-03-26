@@ -6,18 +6,20 @@
 
       <h2 class="header-title-h2">Products</h2>
       <md-layout md-flex-medium="100" md-flex="100">
-        <md-layout md-flex-medium="50" md-flex="50">      
+      <md-layout md-flex-medium="30" md-flex="30">
+        <md-layout md-flex-medium="100" md-flex="100">
           <md-input-container md-inline>
             <label>Product name</label>
             <md-input v-model="nameText"></md-input>
           </md-input-container>
         </md-layout>
         
-        <md-layout md-flex-medium="50" md-flex="50">
+        <md-layout md-flex-medium="100" md-flex="100">
           <md-input-container md-inline>
             <label>Price</label>
             <md-input v-model="priceText"></md-input>
           </md-input-container>
+          </md-layout>
           </md-layout>
       </md-layout>
 
@@ -34,13 +36,14 @@
 
         <md-table-body>
           <md-table-row v-for="(product, indexNo) in filterByName" :key="product.id" class="md-table-cell-align">
-            <md-table-cell v-for="(prop, propIndex) in product" :key="index" class="md-table-cell-align" v-if="propIndex !== 'image' && propIndex !== 'id'" @click.native="changeClicked()">
-              <template v-if="propIndex === 'price' && !clicked">£ {{prop}}</template>
-              <template v-else v-if="!clicked && propIndex !== 'price'">{{prop}}</template>
+            <md-table-cell v-for="(prop, propIndex) in product" :key="propIndex" class="md-table-cell-align" v-if="propIndex !== 'image' && propIndex !== 'id'" @click.native="changeClicked(indexNo)">
+              <template v-if="propIndex === 'price' && !clicked[indexNo]">£ {{prop}}</template>
+              <template v-else v-if="!clicked[indexNo] && propIndex !== 'price'">{{prop}}</template>
 
-              <template v-if="clicked">
+              <template v-if="clicked[indexNo]">
                 <md-input-container md-inline><md-input v-model="products[indexNo][propIndex]"></md-input></md-input-container>
               </template>
+              
             </md-table-cell>
           </md-table-row>
         </md-table-body>
@@ -80,10 +83,18 @@ export default {
     return {
       nameText: '',
       priceText: '',
-      clicked: false,
-      changeClicked: () => {
-        this.clicked = true
-        console.log(this.clicked)
+      clicked: [],
+      fillChangeStatus: () => {
+        this.products.forEach(item => {
+          this.clicked.push(false)
+        })
+      },
+      changeClicked: (index) => {
+        if (index === 'all') {
+          this.$set(this.clicked, [])
+        } else {
+          this.$set(this.clicked, index, true)
+        }
       },
       addProducts: () => {
         let newProduct = {
@@ -121,6 +132,9 @@ export default {
         }
       })
     }
+  },
+  mounted () {
+    this.fillChangeStatus()
   }
 }
 </script>
