@@ -36,9 +36,15 @@
         <md-table-body>
           <md-table-row v-for="(product, indexNo) in filterByName" :key="product.id" class="md-table-cell-align">
             <md-table-cell v-for="(prop, propIndex) in product" :key="propIndex" class="md-table-cell-align" v-if="propIndex !== 'image' && propIndex !== 'id'">
-              <template v-if="propIndex !== 'count'">
+              <template v-if="propIndex !== 'count' && propIndex !== 'postdate' && propIndex !== 'price'">
                 <input v-model="products[indexNo][propIndex]" @blur="editProduct(indexNo, product)">
                </template>
+               <template v-if="propIndex !== 'count' && propIndex === 'postdate' && propIndex !== 'price'">
+                <input v-model="products[indexNo][propIndex]" @blur="editProduct(indexNo, product)" :disabled="true">
+                </template>
+                <template v-if="propIndex !== 'count' && propIndex !== 'postdate' && propIndex === 'price'">
+                £ <input v-model="products[indexNo][propIndex]" @blur="editProduct(indexNo, product)" id="price-input-width"/>
+                </template>
             </md-table-cell>
           </md-table-row>
         </md-table-body>
@@ -58,6 +64,14 @@
   input {
     border: none;
     width: 100%;
+  }
+
+  input:disabled {
+    background-color: #fff;
+  }
+
+  #price-input-width {
+    width: 80%
   }
 
   .md-table-cell-align {
@@ -117,18 +131,13 @@ export default {
             })
         }
       },
+      /**
+      * Edits products based on their ID
+      */
       editProduct: (indexNo, productObj) => {
-        // axios.get('http://127.0.0.1:8000/api/admin/products/'.concat(productObj.id, '/'), {headers: {Authorization: this.token}}).then(response => {
-        //   console.log(response)
-        // }).catch(error => {
-        //   console.log(error)
-        // }).then(
-        //   this.changeClicked(indexNo)
-        // )
         let updatedObj = {
           title: productObj['title'],
           description: productObj['description'],
-          postdate: productObj['postdate'],
           price: productObj['price']
         }
         axios.patch('http://127.0.0.1:8000/api/admin/products/'.concat(productObj.id, '/'), updatedObj, {headers: {Authorization: this.token}}).catch(error => {
