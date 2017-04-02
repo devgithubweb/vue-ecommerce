@@ -80,7 +80,7 @@
          * @return {null}       Mutates models separately
          */
         removeProducts: index => {
-          axios.delete('http://127.0.0.1:8000/api/products/'.concat(this.products[index].id), {headers: {Authorization: this.token}}).catch(error => {
+          axios.delete('http://127.0.0.1:8000/api/products/'.concat([this.products[index].id, '/']), {headers: {Authorization: this.token}}).catch(error => {
             console.log(error)
           })
           this.products.splice(index, 1)

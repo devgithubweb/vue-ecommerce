@@ -30,26 +30,15 @@
             <md-table-head>Content</md-table-head>
             <md-table-head>Post Date</md-table-head>
             <md-table-head>Price</md-table-head>
-            <md-table-head>Edit</md-table-head>
           </md-table-row>
         </md-table-header>
 
         <md-table-body>
           <md-table-row v-for="(product, indexNo) in filterByName" :key="product.id" class="md-table-cell-align">
             <md-table-cell v-for="(prop, propIndex) in product" :key="propIndex" class="md-table-cell-align" v-if="propIndex !== 'image' && propIndex !== 'id'">
-              <template v-if="propIndex === 'price' && !clicked[indexNo]">£ {{prop}}</template>
-              <template v-else v-if="!clicked[indexNo] && propIndex !== 'price' && propIndex !== 'count'">{{prop}}</template>
-              <template v-if="propIndex === 'count' && !clicked[indexNo]">
-                <a href="#" @click="changeClicked(indexNo)"><md-icon >mode_edit</md-icon></a>
-              </template>
-
-              <template v-if="clicked[indexNo] && propIndex !== 'count'">
-                <md-input-container md-inline><md-input v-model="products[indexNo][propIndex]"></md-input></md-input-container>
-              </template>
-              <template v-if="clicked[indexNo] && propIndex === 'count'">
-                <a href="#" @click="changeClicked(indexNo)"><md-icon>done</md-icon></a>
-              </template>
-              
+              <template v-if="propIndex !== 'count'">
+                <input v-model="products[indexNo][propIndex]" @blur="editProduct(indexNo, product)">
+               </template>
             </md-table-cell>
           </md-table-row>
         </md-table-body>
@@ -66,6 +55,11 @@
 </template>
 
 <style scoped>
+  input {
+    border: none;
+    width: 100%;
+  }
+
   .md-table-cell-align {
     text-align: left;
   }
@@ -77,14 +71,17 @@
   .header-title-h2 {
     text-align: left;
   }
+  
 </style>
 
 <script type="text/babel">
 import {mapGetters} from 'vuex'
 import axios from 'axios'
+import {focus} from 'vue-focus'
 
 export default {
   name: 'ProductAdmin',
+  directives: {focus: focus},
   data () {
     return {
       nameText: '',
@@ -102,6 +99,10 @@ export default {
           this.$set(this.clicked, index, !this.clicked[index])
         }
       },
+       /**
+         * Adds product through authorization header and based on newProduct object
+         * @return {null}
+         */
       addProducts: () => {
         let newProduct = {
           title: this.title,
@@ -116,8 +117,33 @@ export default {
             })
         }
       },
+      editProduct: (indexNo, productObj) => {
+        // axios.get('http://127.0.0.1:8000/api/admin/products/'.concat(productObj.id, '/'), {headers: {Authorization: this.token}}).then(response => {
+        //   console.log(response)
+        // }).catch(error => {
+        //   console.log(error)
+        // }).then(
+        //   this.changeClicked(indexNo)
+        // )
+        let updatedObj = {
+          title: productObj['title'],
+          description: productObj['description'],
+          postdate: productObj['postdate'],
+          price: productObj['price']
+        }
+        axios.patch('http://127.0.0.1:8000/api/admin/products/'.concat(productObj.id, '/'), updatedObj, {headers: {Authorization: this.token}}).catch(error => {
+          console.log(error)
+        }).then(
+          this.changeClicked(indexNo)
+        )
+      },
+      /**
+         * Removes product based on user actions
+         * @param  {number} index The index of the product is deleted
+         * @return {null}       Mutates models separately
+         */
       removeProducts: index => {
-        axios.delete('http://127.0.0.1:8000/api/products/'.concat(this.products[index].id), {headers: {Authorization: this.token}}).catch(error => {
+        axios.delete('http://127.0.0.1:8000/api/admin/products/'.concat(this.products[index].id), {headers: {Authorization: this.token}}).catch(error => {
           console.log(error)
         })
         this.products.splice(index, 1)
@@ -127,7 +153,8 @@ export default {
   computed: {
     ...mapGetters({
       isAdmin: 'isAdminState',
-      products: 'productState'
+      products: 'productState',
+      token: 'tokenState'
     }),
     filterByName () {
       return this.products.filter(list => {
