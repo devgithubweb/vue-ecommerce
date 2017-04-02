@@ -34,16 +34,16 @@
         </md-table-header>
 
         <md-table-body>
-          <md-table-row v-for="(product, indexNo) in filterByName" :key="product.id" class="md-table-cell-align">
-            <md-table-cell v-for="(prop, propIndex) in product" :key="propIndex" class="md-table-cell-align" v-if="propIndex !== 'image' && propIndex !== 'id'">
+          <md-table-row v-for="(product, indexNo) in filterByName" class="md-table-cell-align">
+            <md-table-cell v-for="(prop, propIndex) in product" class="md-table-cell-align" v-if="propIndex !== 'image' && propIndex !== 'id'">
               <template v-if="propIndex !== 'count' && propIndex !== 'postdate' && propIndex !== 'price'">
-                <input v-model="products[indexNo][propIndex]" @blur="editProduct(indexNo, product)">
+                <input v-model="product[propIndex]" @blur="editProduct(indexNo, product)">
                </template>
                <template v-if="propIndex !== 'count' && propIndex === 'postdate' && propIndex !== 'price'">
-                <input v-model="products[indexNo][propIndex]" @blur="editProduct(indexNo, product)" :disabled="true">
+                <input v-model="product[propIndex]" @blur="editProduct(indexNo, product)" :disabled="true">
                 </template>
                 <template v-if="propIndex !== 'count' && propIndex !== 'postdate' && propIndex === 'price'">
-                £ <input v-model="products[indexNo][propIndex]" @blur="editProduct(indexNo, product)" id="price-input-width"/>
+                £ <input v-model="product[propIndex]" @blur="editProduct(indexNo, product)" id="price-input-width"/>
                 </template>
             </md-table-cell>
           </md-table-row>
@@ -143,9 +143,7 @@ export default {
         }
         axios.patch('http://127.0.0.1:8000/api/admin/products/'.concat(productObj.id, '/'), updatedObj, {headers: {Authorization: this.token}}).catch(error => {
           console.log(error)
-        }).then(
-          this.changeClicked(indexNo)
-        )
+        })
       },
       /**
          * Removes product based on user actions
@@ -168,16 +166,11 @@ export default {
     }),
     filterByName () {
       return this.products.filter(list => {
-        if (list.title.toLowerCase().includes(this.nameText.toLowerCase()) >= 0 && list.price.toLowerCase().includes(this.priceText.toLowerCase()) >= 0) {
-          return list.title.toLowerCase().includes(this.nameText.toLowerCase()) && list.price.toLowerCase().includes(this.priceText.toLowerCase())
-        } else {
-          return this.products
-        }
+        return list.title.toLowerCase().includes(this.nameText.toLowerCase()) && list.price >= this.priceText
       })
     }
   },
   mounted () {
-    this.fillChangeStatus()
   }
 }
 </script>
