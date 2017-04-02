@@ -30,18 +30,24 @@
             <md-table-head>Content</md-table-head>
             <md-table-head>Post Date</md-table-head>
             <md-table-head>Price</md-table-head>
-            <md-table-head>Stock</md-table-head>
+            <md-table-head>Edit</md-table-head>
           </md-table-row>
         </md-table-header>
 
         <md-table-body>
           <md-table-row v-for="(product, indexNo) in filterByName" :key="product.id" class="md-table-cell-align">
-            <md-table-cell v-for="(prop, propIndex) in product" :key="propIndex" class="md-table-cell-align" v-if="propIndex !== 'image' && propIndex !== 'id'" @click.native="changeClicked(indexNo)">
+            <md-table-cell v-for="(prop, propIndex) in product" :key="propIndex" class="md-table-cell-align" v-if="propIndex !== 'image' && propIndex !== 'id'">
               <template v-if="propIndex === 'price' && !clicked[indexNo]">£ {{prop}}</template>
-              <template v-else v-if="!clicked[indexNo] && propIndex !== 'price'">{{prop}}</template>
+              <template v-else v-if="!clicked[indexNo] && propIndex !== 'price' && propIndex !== 'count'">{{prop}}</template>
+              <template v-if="propIndex === 'count' && !clicked[indexNo]">
+                <a href="#" @click="changeClicked(indexNo)"><md-icon >mode_edit</md-icon></a>
+              </template>
 
-              <template v-if="clicked[indexNo]">
+              <template v-if="clicked[indexNo] && propIndex !== 'count'">
                 <md-input-container md-inline><md-input v-model="products[indexNo][propIndex]"></md-input></md-input-container>
+              </template>
+              <template v-if="clicked[indexNo] && propIndex === 'count'">
+                <a href="#" @click="changeClicked(indexNo)"><md-icon>done</md-icon></a>
               </template>
               
             </md-table-cell>
@@ -93,7 +99,7 @@ export default {
         if (index === 'all') {
           this.$set(this.clicked, [])
         } else {
-          this.$set(this.clicked, index, true)
+          this.$set(this.clicked, index, !this.clicked[index])
         }
       },
       addProducts: () => {
