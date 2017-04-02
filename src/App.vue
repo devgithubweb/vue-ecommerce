@@ -8,7 +8,7 @@
       <h3 v-if="username">Hi, {{username}}</h3>
 
       <md-menu md-align-trigger style="flex: 2" md-direction="bottom left">
-        <md-button md-menu-trigger><md-icon>shopping_cart</md-icon></md-button>
+        <md-button md-menu-trigger><md-icon>shopping_cart</md-icon><strong>({{getBasketLength}})</strong></md-button>
 
         <md-menu-content>
           <md-menu-item disabled v-if="basket.length == 0">No item in cart</md-menu-item>
@@ -56,12 +56,24 @@
       AccountService,
       Signup
     },
-    computed: mapGetters({
-      username: 'usernameState',
-      basket: 'basketState',
-      total: 'totalState',
-      isAdmin: 'isAdminState'
-    })
+    computed: {
+      ...mapGetters({
+        username: 'usernameState',
+        basket: 'basketState',
+        total: 'totalState',
+        isAdmin: 'isAdminState'
+      }),
+      getBasketLength () {
+        let basket = this.basket
+        let total = 0
+
+        basket.forEach((item) => {
+          total += item.count
+        })
+
+        return total
+      }
+    }
   }
 </script>
 
@@ -81,7 +93,7 @@
   }
 
   .md-menu-content {
-    width: 250px;
+    width: 120%;
   }
 
   .sticky-header {

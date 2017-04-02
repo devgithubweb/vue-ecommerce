@@ -64,6 +64,7 @@
   input {
     border: none;
     width: 100%;
+    /*background-color: rgb(238, 238, 238)*/
   }
 
   input:disabled {
