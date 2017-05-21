@@ -41,7 +41,7 @@
 <script>
   import ProductService from './services/ProductService'
   import AccountService from './services/AccountService'
-  import Signup from './components/Signup'
+  import Signup from './components/Account/Signup'
   import Vue from 'vue'
   import {mapGetters} from 'vuex'
   import VueMaterial from 'vue-material'

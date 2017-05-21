@@ -22,7 +22,7 @@
   import VueFormGenerator from 'vue-form-generator'
   import 'vue-form-generator/dist/vfg-core.css'
   import Vue from 'vue'
-  import Signup from '../components/Signup'
+  import Signup from '../components/Account/Signup'
   import {mapGetters} from 'vuex'
   import axios from 'axios'
 
@@ -73,6 +73,7 @@
             password: this.model.passwordModel
           }
           axios.post('http://127.0.0.1:8000/rest-auth/login/', data).then(response => {
+            console.log(response)
             if (response['data']['key']) {
               this.$store.dispatch('setToken', 'Token ' + response['data']['key'])
               this.$store.dispatch('setUsername', this.model.usernameModel)
@@ -102,9 +103,7 @@
           //   password: this.model.passwordModel
           // }
           axios.get('http://127.0.0.1:8000/api/admin-user/' + this.model.usernameModel + '/', {headers: {Authorization: this.token}}).then(response => {
-            console.log(response)
-            if (response.data['results'][0]['is_staff']) {
-              console.log('true is staff')
+            if (response.data[0]['is_staff']) {
               this.$store.dispatch('setIsAdmin', true)
             }
           }).catch(error => {

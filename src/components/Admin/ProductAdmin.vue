@@ -34,8 +34,8 @@
         </md-table-header>
 
         <md-table-body>
-          <md-table-row v-for="(product, indexNo) in filterByName" class="md-table-cell-align">
-            <md-table-cell v-for="(prop, propIndex) in product" class="md-table-cell-align" v-if="propIndex !== 'image' && propIndex !== 'id'">
+          <md-table-row v-for="(product, indexNo) in filterByName|paginate" :key="product.id" class="md-table-cell-align">
+            <md-table-cell v-for="(prop, propIndex) in product" :key="propIndex" class="md-table-cell-align" v-if="propIndex !== 'image' && propIndex !== 'id'">
               <template v-if="propIndex !== 'count' && propIndex !== 'postdate' && propIndex !== 'price'">
                 <input v-model="product[propIndex]" @blur="editProduct(indexNo, product)">
                </template>
@@ -49,6 +49,9 @@
           </md-table-row>
         </md-table-body>
       </md-table>
+      <li v-for="pageNumber in totalPages" v-if="Math.abs(pageNumber - currentPage) < 3 || pageNumber == totalPages - 1 || pageNumber == 0">
+    <a href="#" @click="setPage(pageNumber)"  :class="{current: currentPage === pageNumber, last: (pageNumber == totalPages - 1 && Math.abs(pageNumber - currentPage) > 3), first:(pageNumber == 0 && Math.abs(pageNumber - currentPage) > 3)}">{{ pageNumber+1 }}</a>
+    </li>
       </md-layout>
       </md-layout>
 
@@ -93,6 +96,16 @@
 import {mapGetters} from 'vuex'
 import axios from 'axios'
 import {focus} from 'vue-focus'
+import Vue from 'vue'
+
+Vue.filter('paginate', (list) => {
+  this.resultCount = list.length
+  if (this.currentPage >= this.totalPages) {
+    this.currentPage = this.totalPages - 1
+  }
+  let index = this.currentPage * this.itemsPerPage
+  return list.slice(index, index + this.itemsPerPage)
+})
 
 export default {
   name: 'ProductAdmin',
@@ -102,6 +115,12 @@ export default {
       nameText: '',
       priceText: '',
       clicked: [],
+      currentPage: 0,
+      itemsPerPage: 30,
+      resultCount: 0,
+      setPage (pageNumber) {
+        this.currentPage = pageNumber
+      },
       fillChangeStatus: () => {
         this.products.forEach(item => {
           this.clicked.push(false)
@@ -168,6 +187,9 @@ export default {
       return this.products.filter(list => {
         return list.title.toLowerCase().includes(this.nameText.toLowerCase()) && list.price >= this.priceText
       })
+    },
+    totalPages () {
+      return Math.ceil(this.resultCount / this.itemsPerPage)
     }
   },
   mounted () {
