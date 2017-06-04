@@ -39,8 +39,8 @@
 </template>
 
 <script>
-  import ProductService from './services/ProductService'
-  import AccountService from './services/AccountService'
+  import ProductService from './components/Product/ProductService'
+  import AccountService from './components/Account/AccountService'
   import Signup from './components/Account/Signup'
   import Vue from 'vue'
   import {mapGetters} from 'vuex'

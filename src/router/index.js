@@ -3,8 +3,8 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Signup from '@/components/Account/Signup'
 import ProductAdmin from '@/components/Admin/ProductAdmin'
-import AccountService from '@/services/AccountService'
-import ProductService from '@/services/ProductService'
+import AccountService from '@/components/Account/AccountService'
+import ProductService from '@/components/Product/ProductService'
 
 Vue.use(Router)
 

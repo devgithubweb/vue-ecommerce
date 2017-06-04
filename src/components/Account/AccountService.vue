@@ -22,7 +22,7 @@
   import VueFormGenerator from 'vue-form-generator'
   import 'vue-form-generator/dist/vfg-core.css'
   import Vue from 'vue'
-  import Signup from '../components/Account/Signup'
+  import Signup from './Signup'
   import {mapGetters} from 'vuex'
   import axios from 'axios'
 
@@ -85,7 +85,7 @@
             }
           }).catch(error => {
             console.log(error)
-          }).then(response => {
+          }).then(() => {
             this.validateUser()
           })
         },
