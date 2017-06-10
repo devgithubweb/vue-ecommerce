@@ -103,9 +103,11 @@
     methods: {
       toggleLoginNav () {
         this.$refs.loginNav.toggle()
+        this.$refs.basketNav.close()
       },
       toggleBasketNav () {
         this.$refs.basketNav.toggle()
+        this.$refs.loginNav.close()
       }
     },
     computed: {
