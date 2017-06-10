@@ -4,7 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import ProductService from '@/components/Product/ProductService'
-import AccountService from '@/components/Account/AccountService'
+import AccountService from '@/components/Account/account-service'
 import {store} from './services/store/store'
 
 Vue.config.productionTip = false

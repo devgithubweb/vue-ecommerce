@@ -3,12 +3,12 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Signup from '@/components/Account/Signup'
 import ProductAdmin from '@/components/Admin/ProductAdmin'
-import AccountService from '@/components/Account/AccountService'
+import AccountService from '@/components/Account/account-service'
 import ProductService from '@/components/Product/ProductService'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
@@ -29,7 +29,8 @@ export default new Router({
     {
       path: '/products',
       name: 'Products',
-      component: ProductService
+      component: ProductService,
+      title: 'what'
     },
     {
       path: '/admin/products',
@@ -38,3 +39,5 @@ export default new Router({
     }
   ]
 })
+
+export default router

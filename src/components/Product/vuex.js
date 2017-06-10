@@ -10,6 +10,10 @@ export const vuex = {
 
   mutations: {
 
+    SET_PRODUCTS (state, products) {
+      state.products = products
+    },
+
     ADD_TO_BASKET: (state, product) => {
       if (state.basket.indexOf(product) !== -1) {
         state.basket.splice(state.basket.indexOf(product), 1)
@@ -35,6 +39,10 @@ export const vuex = {
   },
 
   getters: {
+    productState (state) {
+      return state.products
+    },
+
     basketState: (state) => {
       return state.basket
     },
@@ -46,6 +54,10 @@ export const vuex = {
   actions: {
     setIsAdmin ({commit}, bool) {
       commit('SET_IS_ADMIN', bool)
+    },
+
+    setProducts ({commit}, products) {
+      commit('SET_PRODUCTS', products)
     },
 
     addToBasket: ({commit}, product) => {

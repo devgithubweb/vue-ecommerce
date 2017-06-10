@@ -26,9 +26,7 @@
               </md-card-actions>
 
               <md-card-content>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed
-                accusantium quasi non, voluptas eius illo quas, saepe voluptate pariatur in deleniti minus sint.
-                Excepturi.
+                {{product.description}}
               </md-card-content>
               </md-card-expand>
             </md-card>
@@ -85,6 +83,9 @@
       this.$nextTick(() => {
         this.getProducts()
       })
+    },
+    beforeCreate () {
+      document.title = 'Products'
     },
     computed: {
       ...mapGetters({
