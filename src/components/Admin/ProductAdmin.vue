@@ -21,9 +21,13 @@
           </md-input-container>
           </md-layout>
           </md-layout>
+        <md-layout md-flex-medium="30" md-flex="30">
+          <md-button>Add Product</md-button>
+        </md-layout>
       </md-layout>
 
-      <md-table class="md-table-full-width">
+      <md-table-card class="md-table-full-width">
+        <md-table>
         <md-table-header>
           <md-table-row>
             <md-table-head>Name</md-table-head>
@@ -37,18 +41,30 @@
           <md-table-row v-for="(product, indexNo) in filterByName" :key="product.id" class="md-table-cell-align">
             <md-table-cell v-for="(prop, propIndex) in product" :key="propIndex" class="md-table-cell-align" v-if="propIndex !== 'image' && propIndex !== 'id'">
               <template v-if="propIndex !== 'count' && propIndex !== 'postdate' && propIndex !== 'price'">
-                <input v-model="product[propIndex]" @blur="editProduct(indexNo, product)">
+                <input v-model="product[propIndex]" @blur="editProduct(indexNo, product)" title="Edit product">
                </template>
                <template v-if="propIndex !== 'count' && propIndex === 'postdate' && propIndex !== 'price'">
-                <input v-model="product[propIndex]" @blur="editProduct(indexNo, product)" :disabled="true">
+                <input v-model="product[propIndex]" @blur="editProduct(indexNo, product)" :disabled="true" title="Edit product">
                 </template>
                 <template v-if="propIndex !== 'count' && propIndex !== 'postdate' && propIndex === 'price'">
-                £ <input v-model="product[propIndex]" @blur="editProduct(indexNo, product)" id="price-input-width"/>
+                £ <input v-model="product[propIndex]" @blur="editProduct(indexNo, product)" id="price-input-width" title="Edit product"/>
                 </template>
             </md-table-cell>
           </md-table-row>
         </md-table-body>
-      </md-table>
+        </md-table>
+
+        <md-table-pagination
+          md-size="5"
+          md-total="10"
+          md-page="1"
+          md-label="Rows"
+          md-separator="of"
+          :md-page-options="[5, 10, 25, 50]"
+        ></md-table-pagination>
+      </md-table-card>
+
+
       </md-layout>
       </md-layout>
 
@@ -112,18 +128,9 @@ export default {
       nameText: '',
       priceText: '',
       clicked: [],
-      fillChangeStatus: () => {
-        this.products.forEach(item => {
-          this.clicked.push(false)
-        })
-      },
-      changeClicked: (index) => {
-        if (index === 'all') {
-          this.$set(this.clicked, [])
-        } else {
-          this.$set(this.clicked, index, !this.clicked[index])
-        }
-      },
+      title: '',
+      description: '',
+      price: 0.00,
        /**
          * Adds product through authorization header and based on newProduct object
          * @return {null}
@@ -131,7 +138,8 @@ export default {
       addProducts: () => {
         let newProduct = {
           title: this.title,
-          description: this.description
+          description: this.description,
+          price: this.price
         }
         if (this.token) {
           axios.post('http://127.0.0.1:8000/api/products/', newProduct, {headers: {Authorization: this.token}})
