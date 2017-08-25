@@ -25,6 +25,7 @@
   import Signup from './Signup'
   import {mapGetters} from 'vuex'
   import axios from 'axios'
+  import Service from './Service'
 
   Vue.use(VueFormGenerator)
 
@@ -35,6 +36,7 @@
     data () {
       return {
         name: 'Login',
+        error: '',
         model: {
           usernameModel: '',
           passwordModel: ''
@@ -68,25 +70,17 @@
          * @return {null}
          */
         login: () => {
-          let data = {
-            username: this.model.usernameModel,
-            password: this.model.passwordModel
-          }
-          axios.post('http://127.0.0.1:8000/rest-auth/login/', data).then(response => {
+          Service.login(this.model.usernameModel, this.model.passwordModel).then(response => {
             console.log(response)
-            if (response['data']['key']) {
-              this.$store.dispatch('setToken', 'Token ' + response['data']['key'])
-              this.$store.dispatch('setUsername', this.model.usernameModel)
-              axios.create({
-                headers: {
-                  Authorization: this.token
-                }
-              })
+            if (response['data']['token']) {
+              localStorage.setItem('token', `JWT ${response['data']['token']}`)
+              localStorage.setItem('username', this.model.usernameModel)
+              localStorage.setItem('is_admin', response['data']['is_staff'])
             }
           }).catch(error => {
-            console.log(error)
-          }).then(() => {
-            this.validateUser()
+              if (error === 401) {
+                  this.error = 'Incorrect username or password'
+              }
           })
         },
         /**
@@ -94,21 +88,8 @@
          * @return {null}
          */
         logout: () => {
-          this.$store.dispatch('setUsername', null)
-          this.$store.dispatch('setToken', null)
-        },
-        validateUser: () => {
-          // let data = {
-          //   username: this.model.usernameModel,
-          //   password: this.model.passwordModel
-          // }
-          axios.get('http://127.0.0.1:8000/api/admin-user/' + this.model.usernameModel + '/', {headers: {Authorization: this.token}}).then(response => {
-            if (response.data[0]['is_staff']) {
-              this.$store.dispatch('setIsAdmin', true)
-            }
-          }).catch(error => {
-            console.log(error)
-          })
+          localStorage.removeItem('Token')
+          localStorage.removeItem('username')
         }
       }
     },

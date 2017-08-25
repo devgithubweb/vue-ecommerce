@@ -3,8 +3,8 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import ProductService from '@/components/Product/ProductService'
-import AccountService from '@/components/Account/account-service'
+import ProductComponent from '@/components/Product/ProductComponent'
+import AccountService from '@/components/Account/AccountService'
 import {store} from './services/store/store'
 
 Vue.config.productionTip = false
@@ -15,6 +15,6 @@ new Vue({
   store,
   router,
   template: '<App/>',
-  components: {App, ProductService, AccountService}
+  components: {App, ProductComponent, AccountService}
 })
 

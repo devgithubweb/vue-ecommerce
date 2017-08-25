@@ -1,5 +1,6 @@
 <template>
   <div class="signup-div">
+    <h3>Sign up</h3>
     <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
 
     <md-button @click.native="register()">Register</md-button><md-button @click.native="$store.dispatch('setShowRegister', false)">Cancel</md-button>
@@ -11,7 +12,7 @@
   import VueFormGenerator from 'vue-form-generator'
   import 'vue-form-generator/dist/vfg-core.css'
   import Vue from 'vue'
-  import axios from 'axios'
+  import Service from './Service'
 
   Vue.use(VueFormGenerator)
 
@@ -66,20 +67,7 @@
           validateAfterChanged: true
         },
         register: () => {
-          let data = {
-            username: this.model.username,
-            email: this.model.email,
-            password1: this.model.password1,
-            password2: this.model.password2
-          }
-          axios.post('http://127.0.0.1:8000/rest-auth/registration/', data).then(response => {
-            console.log(response)
-            if (response['data']['key']) {
-              console.log(response['data']['key'])
-            }
-          }).catch(error => {
-            console.log(error)
-          })
+          Service.register(this.model.username, this.model.email, this.model.password1, this.model.password2)
         }
       }
     }

@@ -3,8 +3,8 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Signup from '@/components/Account/Signup'
 import ProductAdmin from '@/components/Admin/ProductAdmin'
-import AccountService from '@/components/Account/account-service'
-import ProductService from '@/components/Product/ProductService'
+import AccountService from '@/components/Account/AccountService'
+import ProductComponent from '@/components/Product/ProductComponent'
 
 Vue.use(Router)
 
@@ -29,7 +29,7 @@ const router = new Router({
     {
       path: '/products',
       name: 'Products',
-      component: ProductService,
+      component: ProductComponent,
       title: 'what'
     },
     {
