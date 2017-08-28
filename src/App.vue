@@ -12,7 +12,6 @@
       <md-toolbar>
         <div class="md-toolbar-container">
           <h3 class="md-title">Login</h3>
-
         </div>
       </md-toolbar>
 
@@ -21,7 +20,7 @@
       <md-list>
         <md-list-item disabled v-for="product in basket" :key="product.id">
           {{product.title}} - £{{product.price}} <div style="float: right">x{{product.count}}</div>
-          <md-icon>remove_shopping_cart</md-icon>
+          <a v-on:click="$store.dispatch('removeFromBasket', product)"><md-icon>remove_shopping_cart</md-icon></a>
         </md-list-item>
       </md-list>
       <p disabled v-if="total"><strong>Total: £{{total}} </strong></p><md-button v-if="total != 0">Check Out</md-button>
@@ -41,13 +40,14 @@
 </template>
 
 <script>
-  import ProductService from './components/Product/ProductComponent'
-  import AccountService from './components/Account/AccountService'
-  import Signup from './components/Account/Signup'
   import Vue from 'vue'
   import {mapGetters} from 'vuex'
   import VueMaterial from 'vue-material'
-  import 'es6-promise/auto'
+
+  import ProductService from './components/Product/ProductComponent'
+  import AccountService from './components/Account/AccountComponent'
+  import Signup from './components/Account/Signup'
+  import Auth from './services/auth'
 
   Vue.use(VueMaterial)
 
@@ -58,11 +58,14 @@
       AccountService,
       Signup
     },
+    data () {
+      return {
+        username: ''
+      }
+    },
     created () {
-      if (localStorage.getItem('Token') || localStorage.getItem('username')) {
-        this.$store.dispatch('setUsername', localStorage.getItem('username'))
-        this.$store.dispatch('setToken', localStorage.getItem('Token'))
-        this.$store.dispatch('setIsAdmin', localStorage.getItem('is_admin'))
+      if (localStorage.getItem('token')) {
+        this.username = Auth.getUsername()
       }
     },
     methods: {
@@ -77,7 +80,6 @@
     },
     computed: {
       ...mapGetters({
-        username: 'usernameState',
         basket: 'basketState',
         total: 'totalState',
         isAdmin: 'isAdminState'

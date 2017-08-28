@@ -1,6 +1,8 @@
 /**
  * Created by Ibrahim on 21/05/2017.
  */
+// import Vue from 'vue'
+
 export const vuex = {
   state: {
     total: null,
@@ -26,7 +28,16 @@ export const vuex = {
     },
 
     REMOVE_FROM_BASKET (state, product) {
-      state.basket.pop(product)
+      const foundItemIndex = state.basket.indexOf(product)
+      const foundItem = state.basket[foundItemIndex]
+
+      if (foundItem.count > 1) {
+        product.count -= 1
+        state.basket.splice(foundItemIndex, 1)
+        state.basket.splice(foundItemIndex, 0, product)
+      } else {
+        state.basket.splice(foundItemIndex, 1)
+      }
     },
 
     ADD_TOTAL_PRICE (state) {

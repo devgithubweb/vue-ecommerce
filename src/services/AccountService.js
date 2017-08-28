@@ -1,4 +1,3 @@
-<script>
   import axios from 'axios'
 
   export default {
@@ -19,4 +18,3 @@
       return axios.post('http://127.0.0.1:8000/api-token-auth/', data)
     }
   }
-</script>

@@ -12,7 +12,7 @@
   import VueFormGenerator from 'vue-form-generator'
   import 'vue-form-generator/dist/vfg-core.css'
   import Vue from 'vue'
-  import Service from './Service'
+  import Service from '../../services/AccountService'
 
   Vue.use(VueFormGenerator)
 

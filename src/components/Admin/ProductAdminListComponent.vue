@@ -31,7 +31,6 @@
               <md-table-header>
                 <md-table-row>
                   <md-table-head>Name</md-table-head>
-                  <md-table-head>Content</md-table-head>
                   <md-table-head>Post Date</md-table-head>
                   <md-table-head>Price</md-table-head>
                 </md-table-row>
@@ -40,18 +39,22 @@
               <md-table-body>
                 <md-table-row v-for="(product, indexNo) in filterByName" :key="product.id" class="md-table-cell-align">
                   <md-table-cell v-for="(prop, propIndex) in product" :key="propIndex" class="md-table-cell-align"
-                                 v-if="propIndex !== 'image' && propIndex !== 'id'">
-                    <template v-if="propIndex !== 'count' && propIndex !== 'postdate' && propIndex !== 'price'">
-                      <input v-model="product[propIndex]" @blur="editProduct(indexNo, product)" title="Edit product">
+                                 v-if="propIndex !== 'image' && propIndex !== 'id' && propIndex !== 'description' && propIndex !== 'images'
+                                  && propIndex !== 'count'">
+                    <template v-if="propIndex !== 'count' && propIndex !== 'price'
+                     && propIndex !== 'images' && propIndex !== 'description'">
+                      <!--<input v-model="product[propIndex]" @blur="editProduct(indexNo, product)" title="Edit product">-->
+                      {{product[propIndex]}}
                     </template>
-                    <template v-if="propIndex !== 'count' && propIndex === 'postdate' && propIndex !== 'price'">
-                      <input v-model="product[propIndex]" @blur="editProduct(indexNo, product)" :disabled="true"
-                             title="Edit product">
+                    <template v-if="propIndex !== 'count' && propIndex !== 'postdate' && propIndex === 'price'
+                    && propIndex !== 'images' && propIndex !== 'description'">
+                      <!--£ <input v-model="product[propIndex]" @blur="editProduct(indexNo, product)" id="price-input-width"-->
+                      <!--title="Edit product"/>-->
+                      £ {{product[propIndex]}}
                     </template>
-                    <template v-if="propIndex !== 'count' && propIndex !== 'postdate' && propIndex === 'price'">
-                      £ <input v-model="product[propIndex]" @blur="editProduct(indexNo, product)" id="price-input-width"
-                               title="Edit product"/>
-                    </template>
+                  </md-table-cell>
+                  <md-table-cell>
+                    <md-button class="md-button-auto-width" @click.native="goToProduct(product.id)">View</md-button>
                   </md-table-cell>
                 </md-table-row>
               </md-table-body>
@@ -102,6 +105,10 @@
     width: 100%;
   }
 
+  .md-button {
+    width: auto !important;
+  }
+
   .header-title-h2 {
     text-align: left;
   }
@@ -112,6 +119,7 @@
   import {mapGetters} from 'vuex'
   import axios from 'axios'
   import {focus} from 'vue-focus'
+  import Auth from '../../services/auth'
 
   export default {
     name: 'ProductAdmin',
@@ -124,6 +132,7 @@
         title: '',
         description: '',
         price: 0.00,
+        isAdmin: Auth.getIsAdmin(),
         /**
          * Adds product through authorization header and based on newProduct object
          * @return {null}
@@ -154,7 +163,12 @@
           }
           console.log(updatedObj)
           const token = localStorage.getItem('token')
-          axios.patch(`http://127.0.0.1:8000/products/${productObj.id}/`, updatedObj, {headers: {Authorization: token, 'Content-type': 'application/json'}}).catch(error => {
+          axios.patch(`http://127.0.0.1:8000/products/${productObj.id}/`, updatedObj, {
+            headers: {
+              Authorization: token,
+              'Content-type': 'application/json'
+            }
+          }).catch(error => {
             console.log(error)
           })
         },
@@ -168,6 +182,12 @@
             console.log(error)
           })
           this.products.splice(index, 1)
+        },
+        /**
+         * Navigates to individual admin product view
+         */
+        goToProduct (id) {
+          this.$router.push({name: 'ProductAdminDetail', params: {id: id}})
         }
       }
     },

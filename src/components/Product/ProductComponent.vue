@@ -5,32 +5,33 @@
         <md-layout md-align="left">
           <md-layout md-flex-xsmall="50" md-flex-medium="33" md-flex="25" v-for="product in products" :key="product.id"
                      class="product-card">
-            <md-card class="md-card-size">
-              <md-card-media>
-                <img v-bind:src="product.images['0']['image']" v-bind:alt="product.title">
-              </md-card-media>
+              <md-card>
+                <md-card-media>
+                  <img :src="product.images['0']['image']" :alt="product.title">
+                </md-card-media>
 
-              <md-card-header>
-                <div class="md-title">{{product.title}}</div>
-                <div class="md-subhead"></div>
-              </md-card-header>
-              <md-card-expand>
-                <md-card-actions>
-                  <md-button @click.native="addToBasket(product);$store.dispatch('addTotalPrice')">
-                    <md-icon>add_shopping_cart</md-icon>
-                  </md-button>
-                  <p style="padding-left: 10px">£{{product.price}}</p>
-                  <span style="flex: 1"></span>
-                  <md-button class="md-icon-button" md-expand-trigger>
-                    <md-icon>keyboard_arrow_down</md-icon>
-                  </md-button>
-                </md-card-actions>
+                <md-card-header>
+                  <div class="md-title">{{product.title}}</div>
+                  <div class="md-subhead"></div>
+                </md-card-header>
 
-                <md-card-content>
-                  {{product.description}}
-                </md-card-content>
-              </md-card-expand>
-            </md-card>
+                <md-card-expand>
+                  <md-card-actions>
+                    <md-button @click.native="addToBasket(product);$store.dispatch('addTotalPrice')">
+                      <md-icon>add_shopping_cart</md-icon>
+                    </md-button>
+                    <md-button>More info</md-button>
+                    <span style="flex: 1"></span>
+                    <md-button class="md-icon-button" md-expand-trigger>
+                      <md-icon>keyboard_arrow_down</md-icon>
+                    </md-button>
+                  </md-card-actions>
+
+                  <md-card-content>
+                    {{product.description}}
+                  </md-card-content>
+                </md-card-expand>
+              </md-card>
           </md-layout>
         </md-layout>
       </md-layout>
@@ -52,6 +53,7 @@
 //  import axios from 'axios'
   import {mapGetters} from 'vuex'
   import ProductService from '../../services/ProductService'
+  import Auth from '../../services/auth'
 
   export default {
     data () {
@@ -60,6 +62,8 @@
         title: '',
         description: '',
         products: [],
+        token: Auth.getToken(),
+        isAdmin: Auth.getIsAdmin(),
         /**
          * Gets all products and mutates to local variable
          * @return {null}
@@ -96,8 +100,6 @@
     },
     computed: {
       ...mapGetters({
-        token: 'tokenState',
-        username: 'usernameState',
         basket: 'basketState'
       })
     }

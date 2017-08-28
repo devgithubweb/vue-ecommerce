@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 import Home from '@/components/Home'
 import Signup from '@/components/Account/Signup'
-import ProductAdmin from '@/components/Admin/ProductAdmin'
-import AccountService from '@/components/Account/AccountService'
+import ProductAdminListComponent from '@/components/Admin/ProductAdminListComponent'
+import ProductAdminDetailComponent from '@/components/Admin/ProductAdminDetailComponent'
+import AccountComponent from '@/components/Account/AccountComponent'
 import ProductComponent from '@/components/Product/ProductComponent'
 
 Vue.use(Router)
@@ -24,18 +26,22 @@ const router = new Router({
     {
       path: '/login',
       name: 'Login',
-      component: AccountService
+      component: AccountComponent
     },
     {
       path: '/products',
       name: 'Products',
-      component: ProductComponent,
-      title: 'what'
+      component: ProductComponent
     },
     {
       path: '/admin/products',
       name: 'ProductAdmin',
-      component: ProductAdmin
+      component: ProductAdminListComponent
+    },
+    {
+      name: 'ProductAdminDetail',
+      path: '/admin/products/:id',
+      component: ProductAdminDetailComponent
     }
   ]
 })
