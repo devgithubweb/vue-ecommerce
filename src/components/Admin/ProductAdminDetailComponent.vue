@@ -31,7 +31,7 @@
         Associated images:
       </p>
     </md-layout>
-    <md-layout md-flex-medium="90" md-flex="90">
+    <md-layout md-flex-medium="90" md-flex="90" v-if="product.images">
       <div v-for="image in product.images">
         <img :src="image.image" class="image">
       </div>
@@ -49,19 +49,26 @@
 <script>
   import ProductService from '../../services/ProductService'
   import ImageService from '../../services/ImageService'
-  import Auth from '../../services/auth'
+  import Auth from '../../services/Auth'
 
   export default {
     data () {
       return {
-        id: this.$route.params.id,
-        product: {},
+        id: null,
+        product: {
+          title: '',
+          description: '',
+          price: '',
+          images: []
+        },
         postImages: '',
-        images: [],
-        token: Auth.getToken(),
+        images: [{
+
+        }],
+        token: '',
         updateProduct () {
           const prod = {
-            id: this.product.id,
+            id: this.product.id || null,
             title: this.product.title,
             description: this.product.description,
             price: this.product.price
@@ -75,19 +82,24 @@
     },
     mounted () {
       this.$nextTick(() => {
-        const prod = ProductService.getProduct(this.id)
-        const image = ImageService.getImageByProductId(this.id)
+        this.token = Auth.getToken()
 
-        Promise.all([prod, image])
-          .then(result => {
-            this.product = result[0].data
-            document.title = `${this.product.title} | Edit`
-            this.images = result[1].data
-            console.log(result[0])
-          })
-          .catch(error => {
-            console.log(error)
-          })
+        if (!isNaN(this.$route.params.id)) {
+          this.id = this.$route.params.id
+          const prod = ProductService.getProduct(this.id)
+          const image = ImageService.getImageByProductId(this.id)
+
+          Promise.all([prod, image])
+            .then(result => {
+              this.product = result[0].data
+              document.title = `${this.product.title} | Edit`
+              this.images = result[1].data
+              console.log(result[0])
+            })
+            .catch(error => {
+              console.log(error)
+            })
+        }
       })
     }
   }

@@ -21,10 +21,10 @@
                 </md-input-container>
               </md-layout>
             </md-layout>
-            <md-layout md-flex-medium="30" md-flex="30">
-              <md-button>Add Product</md-button>
-            </md-layout>
+
           </md-layout>
+          <md-button class="md-raised">Search Product</md-button>
+          <router-link to="/admin/products/create"><md-button class="md-raised md-primary">Add Product</md-button></router-link>
 
           <md-table-card class="md-table-full-width">
             <md-table>
@@ -119,7 +119,7 @@
   import {mapGetters} from 'vuex'
   import axios from 'axios'
   import {focus} from 'vue-focus'
-  import Auth from '../../services/auth'
+  import Auth from '../../services/Auth'
 
   export default {
     name: 'ProductAdmin',

@@ -16,11 +16,11 @@
       </md-toolbar>
 
       <!--<md-button class="md-raised md-accent" @click.native="closeRightSidenav">Close</md-button>-->
-      <p disabled v-if="basket.length == 0">No item in cart</p>
+      <p v-if="basket.length == 0">No item in cart</p>
       <md-list>
         <md-list-item disabled v-for="product in basket" :key="product.id">
           {{product.title}} - £{{product.price}} <div style="float: right">x{{product.count}}</div>
-          <a v-on:click="$store.dispatch('removeFromBasket', product)"><md-icon>remove_shopping_cart</md-icon></a>
+          <a v-on:click="$store.dispatch('removeFromBasket', product); $store.dispatch('addTotalPrice')"><md-icon>remove_shopping_cart</md-icon></a>
         </md-list-item>
       </md-list>
       <p disabled v-if="total"><strong>Total: £{{total}} </strong></p><md-button v-if="total != 0">Check Out</md-button>
@@ -47,7 +47,7 @@
   import ProductService from './components/Product/ProductComponent'
   import AccountService from './components/Account/AccountComponent'
   import Signup from './components/Account/Signup'
-  import Auth from './services/auth'
+  import Auth from './services/Auth'
 
   Vue.use(VueMaterial)
 
@@ -66,6 +66,7 @@
     created () {
       if (localStorage.getItem('token')) {
         this.username = Auth.getUsername()
+        this.$store.dispatch('setIsAdmin', Auth.getIsAdmin())
       }
     },
     methods: {

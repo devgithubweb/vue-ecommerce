@@ -26,7 +26,7 @@
   import Signup from './Signup'
   import {mapGetters} from 'vuex'
   import Service from '../../services/AccountService'
-  import Auth from '../../services/auth'
+  import Auth from '../../services/Auth'
 
   Vue.use(VueFormGenerator)
 

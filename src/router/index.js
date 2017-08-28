@@ -42,6 +42,11 @@ const router = new Router({
       name: 'ProductAdminDetail',
       path: '/admin/products/:id',
       component: ProductAdminDetailComponent
+    },
+    {
+      name: 'ProductAdminCreate',
+      path: '/admin/products/create',
+      component: ProductAdminDetailComponent
     }
   ]
 })

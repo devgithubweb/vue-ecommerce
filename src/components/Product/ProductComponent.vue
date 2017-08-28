@@ -53,7 +53,7 @@
 //  import axios from 'axios'
   import {mapGetters} from 'vuex'
   import ProductService from '../../services/ProductService'
-  import Auth from '../../services/auth'
+  import Auth from '../../services/Auth'
 
   export default {
     data () {
