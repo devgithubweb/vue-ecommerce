@@ -22,7 +22,7 @@
           <md-file v-model="postImages" id="fileUpload"></md-file>
         </md-input-container>
         <md-button v-if="id" class="md-raised md-primary" @click.native="updateProduct(); createImage()">Update</md-button>
-        <md-button v-else class="md-raised md-primary" @click.native="createProduct()">Create</md-button>
+        <md-button class="md-raised md-primary" @click.native="createProduct()" v-else>Create</md-button>
       </form>
 
     </md-layout>
@@ -113,7 +113,6 @@
             })
         },
         removeImage (image) {
-          image.product_item = null
           ImageService.updateImageProductId(image)
             .then(response => {
               console.log(response)
