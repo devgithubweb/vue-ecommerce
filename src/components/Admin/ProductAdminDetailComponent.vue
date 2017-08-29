@@ -80,9 +80,13 @@
           ProductService.createProduct(this.product)
             .then(response => {
 //              this.$router.push({name: 'ProductAdminDetail', params: {id: response.data['id']}})
-              this.$router.push({name: 'ProductAdmin'})
+//              this.$router.push({name: 'ProductAdmin'})
+              this.product = response.data
+              this.id = this.product.id
             }).catch(error => {
               console.log(error)
+            }).then(() => {
+              this.createImage()
             })
         },
         createImage () {
@@ -144,7 +148,7 @@
           Promise.all([prod, image])
             .then(result => {
               this.product = result[0].data
-              document.title = `${this.product.title} | Edit`
+              document.title = `Admin | ${this.product.title} | Edit`
               this.images = result[1].data
             })
             .catch(error => {

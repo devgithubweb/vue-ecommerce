@@ -66,7 +66,6 @@
               md-page="1"
               md-label="Rows"
               md-separator="of"
-              :md-page-options="[5, 10, 25, 50]"
             ></md-table-pagination>
           </md-table-card>
 
@@ -77,7 +76,7 @@
     </div>
 
     <div v-if="!isAdmin">
-      Please log in to view this page
+      You cannot access this page
     </div>
   </div>
 </template>
@@ -91,10 +90,6 @@
 
   input:disabled {
     background-color: #fff;
-  }
-
-  #price-input-width {
-    width: 80%
   }
 
   .md-table-cell-align {
@@ -117,9 +112,9 @@
 
 <script type="text/babel">
   import {mapGetters} from 'vuex'
-  import axios from 'axios'
   import {focus} from 'vue-focus'
-  import Auth from '../../services/Auth'
+
+  import ProductService from '../../services/ProductService'
 
   export default {
     name: 'ProductAdmin',
@@ -132,60 +127,6 @@
         title: '',
         description: '',
         price: 0.00,
-        isAdmin: Auth.getIsAdmin(),
-        /**
-         * Adds product through authorization header and based on newProduct object
-         * @return {null}
-         */
-        addProducts: () => {
-          let newProduct = {
-            title: this.title,
-            description: this.description,
-            price: this.price
-          }
-          if (this.token) {
-            axios.post('http://127.0.0.1:8000/products/', newProduct, {headers: {Authorization: this.token}})
-              .then(() => {
-                this.getJobs()
-              }).catch(error => {
-                console.log(error)
-              })
-          }
-        },
-        /**
-         * Edits products based on their ID
-         */
-        editProduct: (indexNo, productObj) => {
-          let updatedObj = {
-            title: productObj['title'],
-            description: productObj['description'],
-            price: productObj['price']
-          }
-          console.log(updatedObj)
-          const token = localStorage.getItem('token')
-          axios.patch(`http://127.0.0.1:8000/products/${productObj.id}/`, updatedObj, {
-            headers: {
-              Authorization: token,
-              'Content-type': 'application/json'
-            }
-          }).catch(error => {
-            console.log(error)
-          })
-        },
-        /**
-         * Removes product based on user actions
-         * @param  {number} index The index of the product is deleted
-         * @return {null}       Mutates models separately
-         */
-        removeProducts: index => {
-          axios.delete('http://127.0.0.1:8000/api/admin/products/'.concat(this.products[index].id), {headers: {Authorization: this.token}}).catch(error => {
-            console.log(error)
-          })
-          this.products.splice(index, 1)
-        },
-        /**
-         * Navigates to individual admin product view
-         */
         goToProduct (id) {
           this.$router.push({name: 'ProductAdminDetail', params: {id: id}})
         }
@@ -206,9 +147,8 @@
     },
     mounted () {
       this.$nextTick(() => {
-        axios.get('http://127.0.0.1:8000/products/').then(response => {
+        ProductService.getProducts().then(response => {
           this.products = response.data
-          console.log(this.products)
           this.$store.dispatch('setProducts', response.data)
           for (let i = 0; i < this.products.length; i++) {
             this.products[i]['count'] = 0
@@ -217,6 +157,9 @@
           console.log(error)
         })
       })
+    },
+    beforeCreate () {
+      document.title = 'Admin | Products'
     }
   }
 </script>

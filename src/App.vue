@@ -65,8 +65,9 @@
     },
     created () {
       if (localStorage.getItem('token')) {
+        const adminStatus = (Auth.getIsAdmin() === 'true')
         this.$store.dispatch('setUsername', Auth.getUsername())
-        this.$store.dispatch('setIsAdmin', Auth.getIsAdmin())
+        this.$store.dispatch('setIsAdmin', adminStatus)
       }
     },
     methods: {
