@@ -20,7 +20,7 @@ export default {
       })
   },
   updateProduct (product) {
-    return axios.patch(`${API_URL}products/${product.id}`, product, {headers: {Authorization: token}})
+    return axios.patch(`${API_URL}products/${product.id}/`, product, {headers: {Authorization: token}})
       .then(response => {
         return response
       })

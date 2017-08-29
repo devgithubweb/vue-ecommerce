@@ -1,7 +1,7 @@
 <template>
   <md-layout md-gutter md-align="center" v-if="isAdmin">
     <md-layout md-flex-medium="90" md-flex="90">
-      <form novalidate @submit.stop.prevent="submit" class="form-width">
+      <form novalidate @submit.stop.prevent="submit" class="form-width" enctype="multipart/form-data">
         <md-input-container>
           <label>Name</label>
           <md-input v-model="product.title"></md-input>
@@ -19,9 +19,9 @@
 
         <md-input-container>
           <label>Upload image</label>
-          <md-file v-model="postImages" multiple></md-file>
+          <md-file v-model="postImages" id="fileUpload"></md-file>
         </md-input-container>
-        <md-button v-if="id" class="md-raised md-primary" @click.native="updateProduct()">Update</md-button>
+        <md-button v-if="id" class="md-raised md-primary" @click.native="updateProduct(); createImage()">Update</md-button>
         <md-button v-else class="md-raised md-primary" @click.native="createProduct()">Create</md-button>
       </form>
 
@@ -33,7 +33,8 @@
     </md-layout>
     <md-layout md-flex-medium="90" md-flex="90" v-if="product.images">
       <div v-for="image in product.images">
-        <img :src="image.image" class="image">
+        <p><img :src="image.image" class="image"></p>
+        <p><md-button @click.native="removeImage(image)">Remove</md-button></p>
       </div>
     </md-layout>
   </md-layout>
@@ -84,6 +85,21 @@
               console.log(error)
             })
         },
+        createImage () {
+          let file = document.getElementById('fileUpload').files[0]
+          let data = new FormData()
+          data.append('image', file)
+          data.append('product_item', this.product.id)
+
+          ImageService.createImage(data, this.product.id)
+            .then(response => {
+              console.log(response)
+            }).catch(error => {
+              console.log(error)
+            }).then(() => {
+              this.getProducts()
+            })
+        },
         updateProduct () {
           const prod = {
             id: this.id || null,
@@ -94,6 +110,25 @@
           ProductService.updateProduct(prod, this.token)
             .then(response => {
               console.log(response)
+            })
+        },
+        removeImage (image) {
+          image.product_item = null
+          ImageService.updateImageProductId(image)
+            .then(response => {
+              console.log(response)
+            }).catch(error => {
+              console.log(error)
+            }).then(() => {
+              this.getProducts()
+            })
+        },
+        getProducts () {
+          ProductService.getProduct(this.id)
+            .then(response => {
+              this.product = response.data
+            }).catch(error => {
+              console.log(error)
             })
         }
       }
