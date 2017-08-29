@@ -24,5 +24,11 @@ export default {
       .then(response => {
         return response
       })
+  },
+  createProduct (product) {
+    return axios.post(`${API_URL}products/`, product, {headers: {Authorization: token}})
+      .then(response => {
+        return response
+      })
   }
 }

@@ -1,7 +1,7 @@
 <template>
-  <md-layout md-gutter md-align="center">
+  <md-layout md-gutter md-align="center" v-if="isAdmin">
     <md-layout md-flex-medium="90" md-flex="90">
-      <form novalidate @submit.stop.prevent="submit">
+      <form novalidate @submit.stop.prevent="submit" class="form-width">
         <md-input-container>
           <label>Name</label>
           <md-input v-model="product.title"></md-input>
@@ -21,8 +21,8 @@
           <label>Upload image</label>
           <md-file v-model="postImages" multiple></md-file>
         </md-input-container>
-
-        <md-button class="md-raised md-primary" @click.native="updateProduct()">Update</md-button>
+        <md-button v-if="id" class="md-raised md-primary" @click.native="updateProduct()">Update</md-button>
+        <md-button v-else class="md-raised md-primary" @click.native="createProduct()">Create</md-button>
       </form>
 
     </md-layout>
@@ -37,6 +37,9 @@
       </div>
     </md-layout>
   </md-layout>
+  <md-layout md-gutter md-align="center" v-else>
+  You cannot access this page
+  </md-layout>
 </template>
 
 <style scoped>
@@ -44,9 +47,15 @@
     width: 200px;
     height: 200px;
   }
+
+  .form-width {
+    min-width: 30%;
+  }
 </style>
 
 <script>
+  import {mapGetters} from 'vuex'
+
   import ProductService from '../../services/ProductService'
   import ImageService from '../../services/ImageService'
   import Auth from '../../services/Auth'
@@ -66,9 +75,18 @@
 
         }],
         token: '',
+        createProduct () {
+          ProductService.createProduct(this.product)
+            .then(response => {
+//              this.$router.push({name: 'ProductAdminDetail', params: {id: response.data['id']}})
+              this.$router.push({name: 'ProductAdmin'})
+            }).catch(error => {
+              console.log(error)
+            })
+        },
         updateProduct () {
           const prod = {
-            id: this.product.id || null,
+            id: this.id || null,
             title: this.product.title,
             description: this.product.description,
             price: this.product.price
@@ -94,12 +112,16 @@
               this.product = result[0].data
               document.title = `${this.product.title} | Edit`
               this.images = result[1].data
-              console.log(result[0])
             })
             .catch(error => {
               console.log(error)
             })
         }
+      })
+    },
+    computed: {
+      ...mapGetters({
+        isAdmin: 'isAdminState'
       })
     }
   }

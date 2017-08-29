@@ -6,7 +6,7 @@
           <md-layout md-flex-xsmall="50" md-flex-medium="33" md-flex="25" v-for="product in products" :key="product.id"
                      class="product-card">
               <md-card>
-                <md-card-media>
+                <md-card-media v-if="product.images.length > 0">
                   <img :src="product.images['0']['image']" :alt="product.title">
                 </md-card-media>
 
