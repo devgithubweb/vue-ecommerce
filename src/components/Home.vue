@@ -27,6 +27,9 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
+  },
+  beforeCreate () {
+    document.title = 'Ecommerce System'
   }
 }
 </script>

@@ -81,6 +81,7 @@
               localStorage.setItem('username', this.model.usernameModel)
               localStorage.setItem('is_admin', response['data']['is_staff'])
               this.$store.dispatch('setIsAdmin', response['data']['is_staff'])
+              this.$store.dispatch('setUsername', this.model.usernameModel)
 
               this.username = Auth.getUsername()
               this.isAdmin = Auth.getIsAdmin()
@@ -101,6 +102,7 @@
           localStorage.removeItem('username')
           this.username = Auth.getUsername()
           this.token = Auth.getToken()
+          this.$store.dispatch('setUsername', null)
           this.$store.dispatch('setIsAdmin', false)
         }
       }

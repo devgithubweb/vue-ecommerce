@@ -6,6 +6,7 @@
       <h3 v-if="username">Hi, {{username}}</h3>
         <md-button @click.native="toggleBasketNav"><md-icon>shopping_cart</md-icon><strong>({{getBasketLength}})</strong></md-button>
       <md-button v-if="!username" @click.native="toggleLoginNav" class=" md-dense">Login</md-button>
+      <md-button v-if="username" @click.native="toggleLoginNav" class=" md-dense">Logout</md-button>
     </md-toolbar>
     <br><br><br><br>
     <md-sidenav class="md-left" ref="basketNav">
@@ -32,7 +33,7 @@
 
         </div>
       </md-toolbar>
-      <AccountService class="no-border-form-generator"></AccountService>
+      <AccountComponent class="no-border-form-generator"></AccountComponent>
     </md-sidenav>
     <router-view>
     </router-view>
@@ -45,7 +46,7 @@
   import VueMaterial from 'vue-material'
 
   import ProductService from './components/Product/ProductComponent'
-  import AccountService from './components/Account/AccountComponent'
+  import AccountComponent from './components/Account/AccountComponent'
   import Signup from './components/Account/Signup'
   import Auth from './services/Auth'
 
@@ -55,17 +56,16 @@
     name: 'app',
     components: {
       ProductService,
-      AccountService,
+      AccountComponent,
       Signup
     },
     data () {
       return {
-        username: ''
       }
     },
     created () {
       if (localStorage.getItem('token')) {
-        this.username = Auth.getUsername()
+        this.$store.dispatch('setUsername', Auth.getUsername())
         this.$store.dispatch('setIsAdmin', Auth.getIsAdmin())
       }
     },
@@ -83,7 +83,8 @@
       ...mapGetters({
         basket: 'basketState',
         total: 'totalState',
-        isAdmin: 'isAdminState'
+        isAdmin: 'isAdminState',
+        username: 'usernameState'
       }),
       getBasketLength () {
         let basket = this.basket
