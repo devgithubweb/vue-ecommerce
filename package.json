@@ -4,13 +4,15 @@
   "description": "E-commerce built using VueJs front-end and DjangoRestFramework API",
   "author": "Ibrahim <ibrahimpmahmood@gmail.com>",
   "private": true,
+  "main": "app.js",
   "scripts": {
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --auto-watch",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
-    "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
+    "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
+    "postinstall": "npm run build --prod"
   },
   "dependencies": {
     "axios": "^0.15.3",

@@ -12,7 +12,7 @@
     <md-sidenav class="md-left" ref="basketNav">
       <md-toolbar>
         <div class="md-toolbar-container">
-          <h3 class="md-title">Login</h3>
+          <h3 class="md-title">Basket</h3>
         </div>
       </md-toolbar>
 
@@ -29,7 +29,7 @@
     <md-sidenav class="md-left" ref="loginNav">
       <md-toolbar>
         <div class="md-toolbar-container">
-          <h3 class="md-title">Login</h3>
+          <h3 class="md-title">Account</h3>
 
         </div>
       </md-toolbar>
