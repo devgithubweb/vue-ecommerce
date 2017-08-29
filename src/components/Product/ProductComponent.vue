@@ -44,9 +44,6 @@
     padding: 10px;
   }
 
-  .md-theme-default {
-    width: 100%;
-  }
 </style>
 
 <script>
