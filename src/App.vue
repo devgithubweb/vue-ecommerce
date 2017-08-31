@@ -4,11 +4,14 @@
       <md-button @click.native="$router.push('/products')" class=" md-dense">Products</md-button>
       <md-button @click.native="$router.push('/admin/products')" class=" md-dense" v-if="isAdmin">Admin</md-button>
       <h3 v-if="username">Hi, {{username}}</h3>
-        <md-button @click.native="toggleBasketNav"><md-icon>shopping_cart</md-icon><strong>({{getBasketLength}})</strong></md-button>
-      <md-button v-if="!username" @click.native="toggleLoginNav" class=" md-dense">Login</md-button>
-      <md-button v-if="username" @click.native="toggleLoginNav" class=" md-dense">Logout</md-button>
+      <span style="flex: 1;"></span>
+      <md-button @click.native="toggleBasketNav"><md-icon>shopping_cart</md-icon><strong>({{getBasketLength}})</strong></md-button>
+      <md-button @click.native="toggleLoginNav" class=" md-dense">Account</md-button>
     </md-toolbar>
-    <br><br><br><br>
+    <router-view>
+    </router-view>
+
+    <!-- Tabs content -->
     <md-sidenav class="md-left" ref="basketNav">
       <md-toolbar>
         <div class="md-toolbar-container">
@@ -35,8 +38,6 @@
       </md-toolbar>
       <AccountComponent class="no-border-form-generator"></AccountComponent>
     </md-sidenav>
-    <router-view>
-    </router-view>
   </div>
 </template>
 
@@ -121,9 +122,9 @@
     width: 120%;
   }
 
-  .sticky-header {
-    position:fixed;
-    width: 100%;
-    z-index: 9;
-  }
+  /*.sticky-header {*/
+    /*position:fixed;*/
+    /*width: 100%;*/
+    /*z-index: 9;*/
+  /*}*/
 </style>
