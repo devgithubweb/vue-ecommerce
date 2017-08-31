@@ -11,7 +11,7 @@
                 </md-card-media>
 
                 <md-card-header>
-                  <div class="md-title">{{product.title}}</div>
+                  <div class="md-title"><a href="javascript:void(0)" @click="goToProduct(product.id)">{{product.title}}</a></div>
                   <div class="md-subhead"></div>
                 </md-card-header>
 
@@ -20,8 +20,7 @@
                     <md-button @click.native="addToBasket(product);$store.dispatch('addTotalPrice')">
                       <md-icon>add_shopping_cart</md-icon>
                     </md-button>
-                    <md-button>More info</md-button>
-                    <span style="flex: 1"></span>
+                    <span style="flex: 1">£ {{product.price}}</span>
                     <md-button class="md-icon-button" md-expand-trigger>
                       <md-icon>keyboard_arrow_down</md-icon>
                     </md-button>
@@ -47,10 +46,8 @@
 </style>
 
 <script>
-//  import axios from 'axios'
   import {mapGetters} from 'vuex'
   import ProductService from '../../services/ProductService'
-  import Auth from '../../services/Auth'
 
   export default {
     data () {
@@ -59,8 +56,6 @@
         title: '',
         description: '',
         products: [],
-        token: Auth.getToken(),
-        isAdmin: Auth.getIsAdmin(),
         /**
          * Gets all products and mutates to local variable
          * @return {null}
@@ -76,6 +71,9 @@
             }).catch(error => {
               console.log(error)
             })
+        },
+        goToProduct (id) {
+          this.$router.push({name: 'ProductDetail', params: {id}})
         },
         /**
          * Adds to basket using the store

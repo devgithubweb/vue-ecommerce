@@ -7,6 +7,7 @@ import ProductAdminListComponent from '@/components/Admin/ProductAdminListCompon
 import ProductAdminDetailComponent from '@/components/Admin/ProductAdminDetailComponent'
 import AccountComponent from '@/components/Account/AccountComponent'
 import ProductComponent from '@/components/Product/ProductComponent'
+import ProductDetailComponent from '@/components/Product/ProductDetailComponent'
 
 Vue.use(Router)
 
@@ -32,6 +33,11 @@ const router = new Router({
       path: '/products',
       name: 'Products',
       component: ProductComponent
+    },
+    {
+      path: '/products/:id',
+      name: 'ProductDetail',
+      component: ProductDetailComponent
     },
     {
       path: '/admin/products',

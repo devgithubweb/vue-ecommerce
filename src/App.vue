@@ -1,17 +1,17 @@
 <template>
   <div id="app">
+    <!--Nav bar-->
     <md-toolbar class="sticky-header">
       <md-button @click.native="$router.push('/products')" class=" md-dense">Products</md-button>
       <md-button @click.native="$router.push('/admin/products')" class=" md-dense" v-if="isAdmin">Admin</md-button>
       <h3 v-if="username">Hi, {{username}}</h3>
       <span style="flex: 1;"></span>
       <md-button @click.native="toggleBasketNav"><md-icon>shopping_cart</md-icon><strong>({{getBasketLength}})</strong></md-button>
-      <md-button @click.native="toggleLoginNav" class=" md-dense">Account</md-button>
+      <md-button @click="toggleLoginNav" class=" md-dense">Account</md-button>
     </md-toolbar>
-    <router-view>
-    </router-view>
-
     <!-- Tabs content -->
+
+    <!-- basket tab -->
     <md-sidenav class="md-left" ref="basketNav">
       <md-toolbar>
         <div class="md-toolbar-container">
@@ -19,16 +19,17 @@
         </div>
       </md-toolbar>
 
-      <!--<md-button class="md-raised md-accent" @click.native="closeRightSidenav">Close</md-button>-->
       <p v-if="basket.length == 0">No item in cart</p>
       <md-list>
         <md-list-item disabled v-for="product in basket" :key="product.id">
           {{product.title}} - £{{product.price}} <div style="float: right">x{{product.count}}</div>
-          <a v-on:click="$store.dispatch('removeFromBasket', product); $store.dispatch('addTotalPrice')"><md-icon>remove_shopping_cart</md-icon></a>
+          <a href="javascript:void(0)" v-on:click="$store.dispatch('removeFromBasket', product); $store.dispatch('addTotalPrice')"><md-icon>remove_shopping_cart</md-icon></a>
         </md-list-item>
       </md-list>
       <p disabled v-if="total"><strong>Total: £{{total}} </strong></p><md-button v-if="total != 0">Check Out</md-button>
     </md-sidenav>
+
+    <!-- Account management tab -->
     <md-sidenav class="md-left" ref="loginNav">
       <md-toolbar>
         <div class="md-toolbar-container">
@@ -38,6 +39,10 @@
       </md-toolbar>
       <AccountComponent class="no-border-form-generator"></AccountComponent>
     </md-sidenav>
+    <router-view>
+    </router-view>
+
+
   </div>
 </template>
 

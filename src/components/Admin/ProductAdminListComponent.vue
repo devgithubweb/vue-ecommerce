@@ -43,13 +43,10 @@
                                   && propIndex !== 'count'">
                     <template v-if="propIndex !== 'count' && propIndex !== 'price'
                      && propIndex !== 'images' && propIndex !== 'description'">
-                      <!--<input v-model="product[propIndex]" @blur="editProduct(indexNo, product)" title="Edit product">-->
                       {{product[propIndex]}}
                     </template>
                     <template v-if="propIndex !== 'count' && propIndex !== 'postdate' && propIndex === 'price'
                     && propIndex !== 'images' && propIndex !== 'description'">
-                      <!--£ <input v-model="product[propIndex]" @blur="editProduct(indexNo, product)" id="price-input-width"-->
-                      <!--title="Edit product"/>-->
                       £ {{product[propIndex]}}
                     </template>
                   </md-table-cell>
