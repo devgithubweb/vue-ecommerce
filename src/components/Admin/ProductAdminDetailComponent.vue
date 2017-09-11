@@ -8,7 +8,7 @@
         </md-input-container>
 
         <md-input-container>
-          <label>Textarea</label>
+          <label>Description</label>
           <md-textarea v-model="product.description" maxlength="200"></md-textarea>
         </md-input-container>
 
@@ -19,14 +19,15 @@
 
         <md-input-container>
           <label>Upload image</label>
-          <md-file v-model="postImages" id="fileUpload"></md-file>
+          <md-file v-model="postImages" id="fileUpload" multiple></md-file>
         </md-input-container>
-        <md-button v-if="id" class="md-raised md-primary" @click.native="updateProduct(); createImage()">Update</md-button>
+        <md-button v-if="id" class="md-raised md-primary" @click.native="updateProduct(); createImage()">Update
+        </md-button>
         <md-button class="md-raised md-primary" @click.native="createProduct()" v-else>Create</md-button>
       </form>
 
     </md-layout>
-    <md-layout md-flex-medium="90" md-flex="90">
+    <md-layout md-flex-medium="90" md-flex="90" v-if="id">
       <p>
         Associated images:
       </p>
@@ -34,12 +35,14 @@
     <md-layout md-flex-medium="90" md-flex="90" v-if="product.images">
       <div v-for="image in product.images">
         <p><img :src="image.image" class="image"></p>
-        <p><md-button @click.native="removeImage(image)">Remove</md-button></p>
+        <p>
+          <md-button @click.native="removeImage(image)">Remove</md-button>
+        </p>
       </div>
     </md-layout>
   </md-layout>
   <md-layout md-gutter md-align="center" v-else>
-  You cannot access this page
+    You cannot access this page
   </md-layout>
 </template>
 
@@ -57,6 +60,7 @@
 <script>
   import {mapGetters} from 'vuex'
 
+  import AccountService from '../../services/AccountService'
   import ProductService from '../../services/ProductService'
   import ImageService from '../../services/ImageService'
   import Auth from '../../services/Auth'
@@ -72,9 +76,7 @@
           images: []
         },
         postImages: '',
-        images: [{
-
-        }],
+        images: [{}],
         token: '',
         createProduct () {
           ProductService.createProduct(this.product)
@@ -83,26 +85,33 @@
 //              this.$router.push({name: 'ProductAdmin'})
               this.product = response.data
               this.id = this.product.id
-            }).catch(error => {
-              console.log(error)
+            }).catch(() => {
+              AccountService.logout()
             }).then(() => {
               this.createImage()
             })
         },
         createImage () {
-          let file = document.getElementById('fileUpload').files[0]
-          let data = new FormData()
-          data.append('image', file)
-          data.append('product_item', this.product.id)
+          let files = document.getElementById('fileUpload').files
 
-          ImageService.createImage(data, this.product.id)
-            .then(response => {
-              console.log(response)
-            }).catch(error => {
-              console.log(error)
-            }).then(() => {
-              this.getProducts()
-            })
+          if (files) {
+            for (let i = 0; i < files.length; i++) {
+              let data = new FormData()
+              data.append('image', files[i])
+              data.append('product_item', this.product.id)
+
+              ImageService.createImage(data, this.product.id)
+                .then(response => {
+                  console.log(response)
+                }).catch(error => {
+                  console.log(error)
+                }).then(() => {
+                  this.$router.push({name: 'ProductDetail', params: {id: this.product.id}})
+                })
+            }
+          } else {
+            this.$router.push({name: 'ProductDetail', params: {id: this.product.id}})
+          }
         },
         updateProduct () {
           const prod = {
