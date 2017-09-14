@@ -13,7 +13,7 @@
     </md-layout>
     <md-layout md-align="center" md-gutter>
       <md-layout md-flex="75">
-        <md-chip v-for="(img, index) in product.images" md-editable @click.native="selectImage(img.image)">{{index + 1}}</md-chip>
+        <md-chip v-for="(img, index) in product.images" md-editable @click.native="selectImage(img.image)" class="chip__spacing">{{index + 1}}</md-chip>
         <md-button>{{product.price}}</md-button>
       </md-layout>
     </md-layout>
@@ -24,6 +24,13 @@
     </md-layout>
   </md-whiteframe>
 </template>
+
+<style scoped>
+  .chip__spacing {
+    margin-top: 7px;
+    margin-right: 0.7em;
+  }
+</style>
 
 <script>
   import ProductService from '../../services/ProductService'

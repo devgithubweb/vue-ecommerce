@@ -46,6 +46,12 @@
   </div>
 </template>
 
+<style>
+  .sticky-header {
+    min-height: unset !important;
+  }
+</style>
+
 <script>
   import Vue from 'vue'
   import {mapGetters} from 'vuex'

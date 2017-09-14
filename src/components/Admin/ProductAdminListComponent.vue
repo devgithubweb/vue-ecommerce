@@ -6,7 +6,7 @@
 
           <h2 class="header-title-h2">Products</h2>
           <md-layout md-flex-medium="100" md-flex="100">
-            <md-layout md-flex-medium="30" md-flex="30">
+            <md-layout md-flex-medium="100" md-flex="30">
               <md-layout md-flex-medium="100" md-flex="100">
                 <md-input-container md-inline>
                   <label>Product name</label>
@@ -26,7 +26,7 @@
           <md-button class="md-raised">Search Product</md-button>
           <router-link to="/admin/products/create"><md-button class="md-raised md-primary">Add Product</md-button></router-link>
 
-          <md-table-card class="md-table-full-width">
+          <md-table-card class="table">
             <md-table>
               <md-table-header>
                 <md-table-row>
@@ -93,8 +93,9 @@
     text-align: left;
   }
 
-  .md-table-full-width {
+  .table {
     width: 100%;
+    margin-top: 1em;
   }
 
   .md-button {
@@ -104,6 +105,8 @@
   .header-title-h2 {
     text-align: left;
   }
+
+
 
 </style>
 

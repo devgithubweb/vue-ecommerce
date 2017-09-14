@@ -9,12 +9,17 @@
 
         <md-input-container>
           <label>Description</label>
-          <md-textarea v-model="product.description" maxlength="200"></md-textarea>
+          <md-textarea v-model="product.description" maxlength="300"></md-textarea>
         </md-input-container>
 
         <md-input-container>
           <label>Price</label>
           <md-input type="number" v-model="product.price"></md-input>
+        </md-input-container>
+
+        <md-input-container>
+          <label>Tags</label>
+          <md-input type="text" v-model="tags"></md-input>
         </md-input-container>
 
         <md-input-container>
@@ -60,9 +65,9 @@
 <script>
   import {mapGetters} from 'vuex'
 
-  import AccountService from '../../services/AccountService'
   import ProductService from '../../services/ProductService'
   import ImageService from '../../services/ImageService'
+  import TagService from '../../services/TagService'
   import Auth from '../../services/Auth'
 
   export default {
@@ -75,20 +80,20 @@
           price: '',
           images: []
         },
+        tags: '',
         postImages: '',
         images: [{}],
         token: '',
         createProduct () {
           ProductService.createProduct(this.product)
             .then(response => {
-//              this.$router.push({name: 'ProductAdminDetail', params: {id: response.data['id']}})
-//              this.$router.push({name: 'ProductAdmin'})
+              this.$router.push({name: 'ProductAdminDetail', params: {id: response.data['id']}})
+              this.$router.push({name: 'ProductAdmin'})
               this.product = response.data
               this.id = this.product.id
-            }).catch(() => {
-              AccountService.logout()
             }).then(() => {
               this.createImage()
+              this.createTags()
             })
         },
         createImage () {
@@ -111,6 +116,17 @@
             }
           } else {
             this.$router.push({name: 'ProductDetail', params: {id: this.product.id}})
+          }
+        },
+        createTags () {
+          const tagsArr = this.tags.split(', ')
+
+          for (let i = 0; i < tagsArr; i++) {
+            let tagObj = {name: tagsArr[i], product_item: this.product.id}
+            TagService.createTag(tagObj)
+              .then(response => {
+                console.log(response)
+              })
           }
         },
         updateProduct () {

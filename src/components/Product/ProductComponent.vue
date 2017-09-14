@@ -3,7 +3,7 @@
     <md-layout md-gutter md-align="center">
       <md-layout md-flex-medium="100" md-flex="90">
         <md-layout md-align="left">
-          <md-layout md-flex-xsmall="50" md-flex-medium="33" md-flex="25" v-for="product in products" :key="product.id"
+          <md-layout md-flex-xsmall="100" md-flex-medium="33" md-flex="25" v-for="product in products" :key="product.id"
                      class="product-card">
               <md-card>
                 <md-card-media v-if="product.images.length > 0">
