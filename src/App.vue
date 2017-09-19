@@ -23,7 +23,7 @@
       <md-list>
         <md-list-item disabled v-for="product in basket" :key="product.id">
           {{product.title}} - £{{product.price}} <div style="float: right">x{{product.count}}</div>
-          <a href="javascript:void(0)" v-on:click="$store.dispatch('removeFromBasket', product); $store.dispatch('addTotalPrice')"><md-icon>remove_shopping_cart</md-icon></a>
+          <md-button class="button__spacing" href="javascript:void(0)" v-on:click="$store.dispatch('removeFromBasket', product); $store.dispatch('addTotalPrice')"><md-icon>remove_shopping_cart</md-icon></md-button>
         </md-list-item>
       </md-list>
       <p v-if="total"><strong>Total: £{{total}} </strong></p><md-button @click="$router.push('/checkout'); toggleBasketNav()" v-if="total != 0">Check Out</md-button>
@@ -49,6 +49,10 @@
 <style>
   .sticky-header {
     min-height: unset !important;
+  }
+
+  .button__spacing {
+    min-width: unset!important;
   }
 </style>
 
