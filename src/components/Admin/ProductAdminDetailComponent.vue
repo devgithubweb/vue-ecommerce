@@ -121,7 +121,7 @@
         createTags () {
           const tagsArr = this.tags.split(', ')
 
-          for (let i = 0; i < tagsArr; i++) {
+          for (let i = 0; i < tagsArr.length; i++) {
             let tagObj = {name: tagsArr[i], product_item: this.product.id}
             TagService.createTag(tagObj)
               .then(response => {
@@ -140,6 +140,9 @@
             .then(response => {
               console.log(response)
             })
+          if (this.tags) {
+            this.createTags()
+          }
         },
         removeImage (image) {
           ImageService.updateImageProductId(image)
@@ -169,12 +172,27 @@
           this.id = this.$route.params.id
           const prod = ProductService.getProduct(this.id)
           const image = ImageService.getImageByProductId(this.id)
+          const tags = TagService.getTags(this.id)
 
-          Promise.all([prod, image])
+          Promise.all([prod, image, tags])
             .then(result => {
               this.product = result[0].data
               document.title = `Admin | ${this.product.title} | Edit`
               this.images = result[1].data
+
+              const tagsArr = result[2].data
+
+              for (let i = 0; i < tagsArr.length; i++) {
+                if (i !== tagsArr.length - 1) {
+                  this.tags += `${tagsArr[i]['name']}, `
+                  console.log('not the end')
+                } else {
+                  this.tags += `${tagsArr[i]['name']}`
+                }
+              }
+              console.log(this.tags)
+
+//              this.tags = result[2].data
             })
             .catch(error => {
               console.log(error)

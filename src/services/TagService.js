@@ -15,8 +15,8 @@ export default {
         return response
       })
   },
-  getTags () {
-    return axios.get(`${API_URL}tags/`)
+  getTags (productId) {
+    return axios.get(`${API_URL}tags/?product_item=${productId}`)
       .then(response => {
         return response
       })

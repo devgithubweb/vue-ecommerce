@@ -40,7 +40,7 @@
                 <md-table-row v-for="(product, indexNo) in filterByName" :key="product.id" class="md-table-cell-align">
                   <md-table-cell v-for="(prop, propIndex) in product" :key="propIndex" class="md-table-cell-align"
                                  v-if="propIndex !== 'image' && propIndex !== 'id' && propIndex !== 'description' && propIndex !== 'images'
-                                  && propIndex !== 'count'">
+                                  && propIndex !== 'count' && propIndex !== 'tags'">
                     <template v-if="propIndex !== 'count' && propIndex !== 'price'
                      && propIndex !== 'images' && propIndex !== 'description'">
                       {{product[propIndex]}}
