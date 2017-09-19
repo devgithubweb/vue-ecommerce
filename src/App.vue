@@ -26,7 +26,7 @@
           <a href="javascript:void(0)" v-on:click="$store.dispatch('removeFromBasket', product); $store.dispatch('addTotalPrice')"><md-icon>remove_shopping_cart</md-icon></a>
         </md-list-item>
       </md-list>
-      <p disabled v-if="total"><strong>Total: £{{total}} </strong></p><md-button v-if="total != 0">Check Out</md-button>
+      <p v-if="total"><strong>Total: £{{total}} </strong></p><md-button @click="$router.push('/checkout'); toggleBasketNav()" v-if="total != 0">Check Out</md-button>
     </md-sidenav>
 
     <!-- Account management tab -->

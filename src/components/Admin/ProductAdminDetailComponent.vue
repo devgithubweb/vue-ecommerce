@@ -172,7 +172,7 @@
           this.id = this.$route.params.id
           const prod = ProductService.getProduct(this.id)
           const image = ImageService.getImageByProductId(this.id)
-          const tags = TagService.getTags(this.id)
+          const tags = TagService.getTagsForProduct(this.id)
 
           Promise.all([prod, image, tags])
             .then(result => {
@@ -190,9 +190,6 @@
                   this.tags += `${tagsArr[i]['name']}`
                 }
               }
-              console.log(this.tags)
-
-//              this.tags = result[2].data
             })
             .catch(error => {
               console.log(error)

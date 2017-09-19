@@ -15,8 +15,14 @@ export default {
         return response
       })
   },
-  getTags (productId) {
+  getTagsForProduct (productId) {
     return axios.get(`${API_URL}tags/?product_item=${productId}`)
+      .then(response => {
+        return response
+      })
+  },
+  getUniqueTags () {
+    return axios.get(`${API_URL}tags/?unique=True`)
       .then(response => {
         return response
       })

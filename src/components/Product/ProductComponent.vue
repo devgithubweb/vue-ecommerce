@@ -1,5 +1,10 @@
 <template>
   <div>
+    <md-snackbar md-position="top right" ref="snackbar" md-duration="3000">
+      <span>Item added to the basket.</span>
+      <md-button class="md-accent" md-theme="light-blue" @click="$refs.snackbar.close()">Close</md-button>
+    </md-snackbar>
+
     <md-layout md-gutter md-align="center">
       <md-layout md-flex-medium="100" md-flex="90">
         <md-layout md-align="left">
@@ -17,7 +22,7 @@
 
                 <md-card-expand>
                   <md-card-actions>
-                    <md-button @click.native="addToBasket(product);$store.dispatch('addTotalPrice')">
+                    <md-button @click.native="addToBasket(product);$store.dispatch('addTotalPrice'); $refs.snackbar.open()">
                       <md-icon>add_shopping_cart</md-icon>
                     </md-button>
                     <span style="flex: 1">£ {{product.price}}</span>

@@ -10,6 +10,7 @@ import ProductAdminDetailComponent from '@/components/Admin/ProductAdminDetailCo
 import AccountComponent from '@/components/Account/AccountComponent'
 import ProductComponent from '@/components/Product/ProductComponent'
 import ProductDetailComponent from '@/components/Product/ProductDetailComponent'
+import CheckoutComponent from '@/components/Product/CheckoutComponent'
 import Auth from '../services/Auth'
 
 const API_URL = process.env.API_URL
@@ -59,6 +60,11 @@ const router = new Router({
       name: 'ProductAdminCreate',
       path: '/admin/products/create',
       component: ProductAdminDetailComponent
+    },
+    {
+      name: 'Checkout',
+      path: '/checkout',
+      component: CheckoutComponent
     }
   ]
 })
