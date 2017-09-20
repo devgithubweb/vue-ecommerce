@@ -34,7 +34,7 @@
       <p>This is a basic ecommerce system developed using VueJs 2.
         Still a work in progress as I am learning to build systems from scratch.
         The objective was more of a learning experience to get a practical VueJs web application deployed.
-        Learn best practices of VueJs and Vuex allows me to stay on top of latest concepts.</p>
+        Learning best practices of VueJs and Vuex allows me to stay on top of latest concepts.</p>
 
         <h1 class="md-title">Technology breakdown</h1>
         <p><strong>Front-end technologies:</strong></p>
