@@ -30,5 +30,17 @@ export default {
       .then(response => {
         return response
       })
+  },
+  getLatestProducts () {
+    return axios.get(`${API_URL}products/?latest=True`)
+      .then(response => {
+        return response
+      })
+  },
+  getPopularProducts () {
+    return axios.get(`${API_URL}products/?popular=True`)
+      .then(response => {
+        return response
+      })
   }
 }

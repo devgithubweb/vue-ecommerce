@@ -1,56 +1,113 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://gitter.im/vuejs/vue" target="_blank">Gitter Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-      <br>
-      <li><a href="http://vuejs-templates.github.io/webpack/" target="_blank">Docs for This Template</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
-  </div>
+  <md-layout md-gutter md-align="center">
+    <md-layout md-flex-medium="90" md-flex="90">
+      <md-layout>
+        <h1 class="md-title">Latest products</h1>
+        <md-boards class="md-primary" :md-auto="true" :md-infinite="true" :md-duration="5000" :md-swipeable="true">
+          <md-board v-for="(product, index) in latestProducts" :key="index" :id="`slide${index+1}`">
+            <div v-if="product.images.length > 0">
+              <img :src=product.images[0].image>
+            </div>
+            {{product.title}}
+          </md-board>
+
+        </md-boards>
+      </md-layout>
+      <md-layout>
+
+        <h1 class="md-title">Popular products</h1>
+        <md-boards class="md-primary" :md-auto="true" :md-infinite="true" :md-duration="5000" :md-swipeable="true">
+          <md-board v-for="(product, index) in popularProducts" :key="index" :id="`slide${index+1}`">
+            <div v-if="product.images.length > 0">
+              <img :src=product.images[0].image>
+            </div>
+            {{product.title}}
+          </md-board>
+
+        </md-boards>
+      </md-layout>
+    </md-layout>
+    <md-layout md-flex-medium="90" md-flex="90" md-align="left">
+      <md-layout id="about-section">
+      <h1 class="md-title">About ecommerce system</h1>
+
+      <p>This is a basic ecommerce system developed using VueJs 2.
+        Still a work in progress as I am learning to build systems from scratch.
+        The objective was more of a learning experience to get a practical VueJs web application deployed.
+        Learn best practices of VueJs and Vuex allows me to stay on top of latest concepts.</p>
+
+        <h1 class="md-title">Technology breakdown</h1>
+        <p><strong>Front-end technologies:</strong></p>
+        <ul>
+          <li>VueJs 2</li>
+          <li>Vuex state management</li>
+          <li>Vue-material</li>
+          <li>Axios HTTP client</li>
+        </ul>
+        <p><strong>Back-end technologies:</strong></p>
+        <ul>
+          <li>Django</li>
+          <li>Djangrestframework</li>
+          <li>Heroku</li>
+        </ul>
+      </md-layout>
+    </md-layout>
+  </md-layout>
 </template>
 
 <script>
-export default {
-  name: 'hello',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
+  import ProductService from '../services/ProductService'
+
+  export default {
+    name: 'hello',
+    data () {
+      return {
+        latestProducts: [],
+        popularProducts: []
+      }
+    },
+    mounted () {
+      this.$nextTick(() => {
+        const latestProds = ProductService.getLatestProducts()
+        const popularProds = ProductService.getPopularProducts()
+
+        Promise.all([latestProds, popularProds]).then(result => {
+          this.latestProducts = result[0].data
+          this.popularProducts = result[1].data
+        }).catch(() => {
+          this.latestProducts = 'Error loading latest products'
+          this.popularProducts = 'Error loading popular products'
+        })
+      })
+    },
+    beforeCreate () {
+      document.title = 'Home | Ecommerce System'
     }
-  },
-  beforeCreate () {
-    document.title = 'Ecommerce System'
   }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
+  h1, h2 {
+    font-weight: normal;
+  }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
+  li {
+    display: inline-block;
+    margin: 0 10px;
+  }
 
-a {
-  color: #42b983;
-}
+  a {
+    color: #42b983;
+  }
+
+  #about-section {
+    display: block;
+    text-align: left
+  }
 </style>
