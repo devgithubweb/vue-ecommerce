@@ -1,7 +1,7 @@
 <template>
   <md-layout md-gutter md-align="center">
     <md-layout md-flex-medium="90" md-flex="90">
-      <md-layout>
+      <md-layout md-flex-small="100">
         <h1 class="md-title">Latest products</h1>
         <md-boards class="md-primary" :md-auto="true" :md-infinite="true" :md-duration="5000" :md-swipeable="true">
           <md-board v-for="(product, index) in latestProducts" :key="index" :id="`slide${index+1}`">
@@ -13,7 +13,7 @@
 
         </md-boards>
       </md-layout>
-      <md-layout>
+      <md-layout md-flex-small="100">
 
         <h1 class="md-title">Popular products</h1>
         <md-boards class="md-primary" :md-auto="true" :md-infinite="true" :md-duration="5000" :md-swipeable="true">
@@ -48,7 +48,12 @@
         <ul>
           <li>Django</li>
           <li>Djangrestframework</li>
+        </ul>
+        <p><strong>Deployment:</strong></p>
+        <ul>
           <li>Heroku</li>
+          <li>Python buildpack</li>
+          <li>NodeJs buildpack</li>
         </ul>
       </md-layout>
     </md-layout>

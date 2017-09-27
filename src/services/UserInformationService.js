@@ -7,14 +7,14 @@ const API_URL = process.env.API_URL
 const token = localStorage.getItem('token')
 
 export default {
-  getUserInformation() {
+  getUserInformation () {
     axios.get(`${API_URL}user-information/`, {header: {Authorization: token}})
       .then(response => {
         return response
       })
   },
 
-  createUserInformation(userInfo) {
+  createUserInformation (userInfo) {
     axios.post(`${API_URL}user-information/`, userInfo, {header: {Authorization: token}})
       .then(response => {
         return response

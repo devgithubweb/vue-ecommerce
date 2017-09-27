@@ -2,6 +2,7 @@
   <div id="app">
     <!--Nav bar-->
     <md-toolbar class="sticky-header">
+      <md-button @click.native="$router.push('/')" class=" md-dense">Home</md-button>
       <md-button @click.native="$router.push('/products')" class=" md-dense">Products</md-button>
       <md-button @click.native="$router.push('/admin/products')" class=" md-dense" v-if="isAdmin">Admin</md-button>
       <h3 v-if="username">Hi, {{username}}</h3>
