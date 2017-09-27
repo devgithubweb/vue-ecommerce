@@ -68,7 +68,7 @@
           </div>
         </md-layout>
         <md-layout md-flex="100">
-          <md-button class="md-raised md-primary" style="float: left" @click="order()">Order</md-button>
+          <md-button class="md-raised md-primary" style="float: left" @click="order()" v-if="basket.length > 0">Order</md-button>
         </md-layout>
       </md-layout>
     </md-layout>
