@@ -5,7 +5,7 @@
 import axios from 'axios'
 
 const API_URL = process.env.API_URL
-const token = localStorage.getItem('token')
+let token = localStorage.getItem('token')
 
 export default {
   getImageByProductId (id) {
