@@ -2,6 +2,7 @@
 * Created by Ibrahim on 24/08/2017.
 */
 import axios from 'axios'
+import Auth from './Auth'
 
 const API_URL = process.env.API_URL
 let token = localStorage.getItem('token')
@@ -20,13 +21,13 @@ export default {
       })
   },
   updateProduct (product) {
-    return axios.patch(`${API_URL}products/${product.id}/`, product, {headers: {Authorization: token}})
+    return axios.patch(`${API_URL}products/${product.id}/`, product, {headers: {Authorization: Auth.getToken()}})
       .then(response => {
         return response
       })
   },
   createProduct (product) {
-    return axios.post(`${API_URL}products/`, product, {headers: {Authorization: token}})
+    return axios.post(`${API_URL}products/`, product, {headers: {Authorization: Auth.getToken()}})
       .then(response => {
         return response
       })

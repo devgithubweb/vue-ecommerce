@@ -3,6 +3,7 @@
  */
 
 import axios from 'axios'
+import Auth from './Auth'
 
 const API_URL = process.env.API_URL
 let token = localStorage.getItem('token')
@@ -15,7 +16,7 @@ export default {
       })
   },
   updateImageProductId (image) {
-    const headers = {headers: {Authorization: token}}
+    const headers = {headers: {Authorization: Auth.getToken()}}
     const data = {product_item: null}
     return axios.patch(`${API_URL}images/${image.id}/`, data, headers)
       .then(response => {
@@ -23,7 +24,7 @@ export default {
       })
   },
   createImage (image, productId) {
-    const headers = {headers: {Authorization: token, 'Content-type': 'multipart/form-data'}}
+    const headers = {headers: {Authorization: Auth.getToken(), 'Content-type': 'multipart/form-data'}}
 
     return axios.post(`${API_URL}images/`, image, headers)
       .then(response => {

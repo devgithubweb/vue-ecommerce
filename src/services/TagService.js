@@ -2,13 +2,14 @@
  * Created by Ibrahim on 14/09/2017.
  */
 import axios from 'axios'
+import Auth from './Auth'
 
 const API_URL = process.env.API_URL
 let token = localStorage.getItem('token')
 
 export default {
   createTag (tag) {
-    const headers = {headers: {Authorization: token}}
+    const headers = {headers: {Authorization: Auth.getToken()}}
 
     return axios.post(`${API_URL}tags/`, tag, headers)
       .then(response => {
