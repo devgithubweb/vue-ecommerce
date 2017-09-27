@@ -42,8 +42,9 @@
     </md-sidenav>
     <router-view>
     </router-view>
-
-
+    <md-layout md-flex="100" md-align="center" class="footer">
+      Ecommerce system built using VueJs 2 by <span><a href="http://github.com/ibrahimpmahmood" title="Github">Ibrahim Mahmood</a></span>
+    </md-layout>
   </div>
 </template>
 
@@ -54,6 +55,13 @@
 
   .button__spacing {
     min-width: unset!important;
+  }
+
+  .footer {
+    background-color: rgb(207, 214, 255);
+    height: 100px;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
   }
 </style>
 
