@@ -8,14 +8,14 @@ const token = localStorage.getItem('token')
 
 export default {
   getUserInformation () {
-    axios.get(`${API_URL}user-information/`, {header: {Authorization: token}})
+    return axios.get(`${API_URL}user-information/`, {headers: {Authorization: token}})
       .then(response => {
         return response
       })
   },
 
   createUserInformation (userInfo) {
-    axios.post(`${API_URL}user-information/`, userInfo, {header: {Authorization: token}})
+    return axios.post(`${API_URL}user-information/`, userInfo, {headers: {Authorization: token}})
       .then(response => {
         return response
       })

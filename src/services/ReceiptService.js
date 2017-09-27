@@ -14,7 +14,7 @@ export default {
       })
   },
   createReceipt (receipt) {
-    return axios.post(`${API_URL}receipts/`, receipt, {header: {Authorization: token}})
+    return axios.post(`${API_URL}receipts/`, receipt, {headers: {Authorization: token}})
       .then(response => {
         return response
       })
