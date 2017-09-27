@@ -8,7 +8,7 @@ const token = localStorage.getItem('token')
 
 export default {
   getReceipts () {
-    return axios.get(`${API_URL}receipts/`)
+    return axios.get(`${API_URL}receipts/`, {headers: {Authorization: token}})
       .then(response => {
         return response
       })
